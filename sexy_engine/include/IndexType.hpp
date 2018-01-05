@@ -16,7 +16,7 @@ struct IndexType
     /* public for technical reasons, nobody should modify it */
 
     template <typename T>
-    static auto get()
+    static auto get() noexcept
     {
         static const auto r_id = ++_id;
 
@@ -24,7 +24,7 @@ struct IndexType
     }
 
     template <typename... Args>
-    static auto getMany()
+    static auto getMany() noexcept
     {
         using expander = std::vector<unsigned int>;
 
