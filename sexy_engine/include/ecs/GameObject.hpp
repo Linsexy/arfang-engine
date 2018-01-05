@@ -10,7 +10,7 @@
 #include <unordered_map>
 #include <memory>
 #include "IComponent.hpp"
-#include "IndexType.hpp"
+#include "utils/IndexType.hpp"
 
 class GameObject
 {
