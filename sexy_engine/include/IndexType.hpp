@@ -10,30 +10,30 @@
 #include <iostream>
 #include <vector>
 
-struct IndexType
-{
-    static unsigned int _id;
-    /* public for technical reasons, nobody should modify it */
+namespace utils {
+    struct IndexType {
+        static unsigned int _id;
 
-    template <typename T>
-    static auto get() noexcept
-    {
-        static const auto r_id = ++_id;
+        /* public for technical reasons, nobody should modify it */
 
-        return r_id;
-    }
+        template<typename T>
+        static auto get() noexcept {
+            static const auto r_id = ++_id;
 
-    template <typename... Args>
-    static auto getMany() noexcept
-    {
-        using expander = std::vector<unsigned int>;
+            return r_id;
+        }
 
-        static const auto ret = expander{ 0, (get<Args>())... };
-        static const std::vector<unsigned int> rret(ret.begin() + 1, ret.end());
+        template<typename... Args>
+        static auto getMany() noexcept {
+            using expander = std::vector<unsigned int>;
 
-        /* need to change to fit well with c++17 */
-        return rret;
-    }
-};
+            static const auto ret = expander{0, (get<Args>())...};
+            static const std::vector<unsigned int> rret(ret.begin() + 1, ret.end());
+
+            /* need to change to fit well with c++17 */
+            return rret;
+        }
+    };
+}
 
 #endif //RTYPE_INDEXTYPE_HPP
