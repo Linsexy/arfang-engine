@@ -7,9 +7,11 @@ int main()
 {
     GameObject Mylan;
 
-    Mylan.attachComponent<PosComponent>(17, 27);
-    auto const& pos = Mylan.getComponent<PosComponent>();
+    Mylan.attachComponent<PosComponent>(17, 27); /* creates a PosComponent with 17, 27 as parameters */
 
-    std::cout << pos.x << std::endl;
+    if (Mylan.hasComponent<PosComponent>()) {
+        auto const &pos = Mylan.getComponent<PosComponent>();
+        std::cout << pos.x << std::endl;
+    }
 }
 ```
