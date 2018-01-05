@@ -7,16 +7,21 @@
 
 #include <utility>
 #include <string>
+#include <vector>
+#include <memory>
 
 namespace Sex {
     class DLLoader {
-        std::pair<std::string, void *>     dlHandles;
+        std::vector<std::pair<std::string, void *>>     _dlHandles;
 
     public:
-        DLLoader() = default;
+        DLLoader() : _dlHandles(0) {};
         ~DLLoader() = default;
 
         void    dlOpen(std::string const &);
+        void    dlClose(std::string const &);
+        void    dlCloseAll() noexcept;
+        void    *dlSym(std::string const &, std::string const &) const;
 
     };
 }
