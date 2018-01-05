@@ -18,20 +18,21 @@ struct IndexType
     template <typename T>
     static auto get()
     {
-        static auto r_id = ++_id;
+        static const auto r_id = ++_id;
 
         return r_id;
     }
 
-    template <typename T, typename U, typename... Args>
-    static auto get()
+    template <typename... Args>
+    static auto getMany()
     {
-        //get<Args>(...);
         using expander = std::vector<unsigned int>;
-        //(void) expander{ 0, (get(Args))... };
 
-        std::vector<unsigned int> ret = expander{ 0, (get<Args>())... };
-        return ret;
+        static const auto ret = expander{ 0, (get<Args>())... };
+        static const std::vector<unsigned int> rret(ret.begin() + 1, ret.end());
+
+        /* need to change to fit well with c++17 */
+        return rret;
     }
 };
 
