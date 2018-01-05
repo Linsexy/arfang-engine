@@ -37,6 +37,11 @@ public:
         return (static_cast<CT&>(*ptr));
     }
 
+    template <typename CT>
+    bool hasComponent()
+    {
+        return (_components.find(utils::IndexType::get<CT>()) != _components.end());
+    }
 
 private:
     std::unordered_map<unsigned int, std::shared_ptr<IComponent>> _components;
