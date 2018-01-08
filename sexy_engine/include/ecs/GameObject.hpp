@@ -28,7 +28,7 @@ public:
     }
 
     template <typename CT>
-    CT& getComponent()
+    CT& getComponent() const
     {
         static_assert(std::is_base_of<IComponent, CT>::value,
                       "You have to attach components, not ponies.");
@@ -38,7 +38,7 @@ public:
     }
 
     template <typename CT>
-    bool hasComponent() noexcept
+    bool hasComponent() const noexcept
     {
         return (_components.find(utils::IndexType::get<CT>()) != _components.end());
     }
@@ -46,7 +46,7 @@ public:
     template <typename CT>
     void detachComponent()
     {
-        auto it _components.find(utils::IndexType::get<CT>()) != _components.end();
+        auto it _components.find(utils::IndexType::get<CT>());
         if (it == _components.end())
         {
             throw (std::out_of_range("Component not in Entity"));
