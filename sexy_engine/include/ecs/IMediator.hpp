@@ -5,6 +5,7 @@
 #ifndef RTYPE_IMEDIATOR_HPP
 #define RTYPE_IMEDIATOR_HPP
 
+/*
 template <typename CRTP>
 class BaseMediator
 {
@@ -14,5 +15,5 @@ class BaseMediator
         static_cast<CRTP *>(this)->transmit(t);
     }
 };
-
+*/
 #endif //RTYPE_IMEDIATOR_HPP

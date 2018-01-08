@@ -8,35 +8,34 @@
 #include <memory>
 #include <iostream>
 
-class IMediator;
+namespace Sex {
+    class Mediator;
+    class ASystem {
+    public:
+        ASystem(Mediator *m = nullptr);
 
-class ASystem
-{
-public:
-    ASystem(IMediator * m=nullptr) : mediator(m) {}
+        virtual void update() {};
 
-    virtual void update() {};
+        virtual ~ASystem() = default;
 
-    virtual ~ASystem() = default;
+        Mediator *getMediator()
+        {
+            return mediator;
+        }
 
-    template <typename T>
-    void transmit(const T& t)
-    {
-        mediator->transmit(this, t);
-    }
-    /*
-    template <typename ST, typename... Args>
-    static std::shared_ptr<ASystem> create(const Args&... args) noexcept
-    {
-        static_assert(std::is_base_of<ASystem, ST>::value,
-                      "addSystem function should be called with a type inheriting from ASystem");
+        /*
+        template <typename ST, typename... Args>
+        static std::shared_ptr<ASystem> create(const Args&... args) noexcept
+        {
+            static_assert(std::is_base_of<ASystem, ST>::value,
+                          "addSystem function should be called with a type inheriting from ASystem");
 
-        return (std::shared_ptr<ASystem>(new ST(args...)));
-    }
-     */
+            return (std::shared_ptr<ASystem>(new ST(args...)));
+        }
+         */
 
-private:
-    IMediator* mediator;
-};
-
+    private:
+        Mediator *mediator;
+    };
+}
 #endif //PROJECT_ASYSTEM_HPP
