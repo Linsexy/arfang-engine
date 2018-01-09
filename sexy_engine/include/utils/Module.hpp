@@ -9,19 +9,21 @@
 #include "ecs/ASystem.hpp"
 #include "IndexType.hpp"
 
-namespace utils
+namespace Sex
 {
 
     /* If A inherits from Module, CRTP must be A */
     template<typename CRTP, typename... Events>
-    class Module : public Sex::ASystem
+    class Module : public ASystem
     {
     public:
 
         template <typename Med>
         Module(Med *m) : ASystem(m)
         {
-            {(addHandler<Events>())...};
+            static_assert(std::is_base_of<Module, CRTP>::value,
+            "If a System X inherits from Module, it must template it on itself (class X : public Module<X>)");
+            (addHandler<Events>(),...);
         }
 
         template <typename DT>
@@ -54,7 +56,7 @@ namespace utils
         }
 
         auto getTypes() const noexcept {
-            return (IndexType::getMany<Events...>());
+            return (utils::IndexType::getMany<Events...>());
         }
 
     public:
