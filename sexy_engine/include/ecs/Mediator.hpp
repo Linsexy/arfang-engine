@@ -9,30 +9,40 @@
 #include <unordered_map>
 #include <utils/IndexType.hpp>
 
+//same func in Interface and Module
+
 namespace Sex {
     class ASystem;
     class Mediator/* : public BaseMediator<Mediator>*/ {
     public:
+        Mediator() = default;
+        ~Mediator() = default;
 
         template<typename ST, typename T>
         void transmit(const ST *sender, const T &transmit) {
-            auto id = utils::IndexType::get<T>();
-            for (auto &sys : _systems) {
-                ST *s = static_cast<ST *>(sys);
-                auto v = s->getTypes();
-                if (s != sender && std::find(v.begin(), v.end(), id) != v.end())
-                    s->handle(transmit);
+             auto id = utils::IndexType::get<T>();
+            std::cout << "still transmitting " << id << std::endl;
+            for (const auto &sys : _systems) {
+                for (auto x : sys.second)
+                {
+                    std::cout << x << std::endl;
+                }
+                std::cout << std::endl;
+                if (sys.first != sender && std::find(sys.second.begin(), sys.second.end(), id) != sys.second.end()) {
+                    std::cout << "Jean Michel !" << std::endl;
+                    sys.first->receive(transmit);
+                }
             }
         }
 
-        void addSystem(ASystem *s)
+        template <typename ST>
+        void addSystem(ST *s)
         {
-            _systems.push_back(s);
+            _systems.emplace(s, s->getTypes());
         }
 
     private:
-        //std::unordered_map<unsigned int, ASystem *> _systems;
-        std::vector<ASystem *> _systems;
+        std::unordered_map<ASystem *, std::vector<unsigned int>> _systems;
     };
 }
 

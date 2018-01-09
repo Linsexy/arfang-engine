@@ -7,33 +7,47 @@
 
 #include <memory>
 #include <iostream>
+#include <functional>
+#include <utils/IndexType.hpp>
 
 namespace Sex {
     class Mediator;
-    class ASystem {
-    public:
-        ASystem(Mediator *m = nullptr);
 
+    class ASystem {
+
+    protected:
+        struct AbstractData /* Is useful to provide an interface in order to call virtual functions */
+        {
+            AbstractData(unsigned int d) : mType(d) {}
+            unsigned int mType;
+        };
+
+        template <typename DT>
+        struct ConcreteData : public AbstractData
+        {
+            ConcreteData(const DT& d)  : AbstractData(utils::IndexType::get<DT>()), data(d) {}
+            DT data;
+        };
+
+
+    public:
+        ASystem(Mediator *m = nullptr) : mediator(m)
+        {}
         virtual void update() {};
 
         virtual ~ASystem() = default;
 
-        Mediator *getMediator()
+        Mediator *getMediator() {return mediator;}
+
+        virtual void handler(const AbstractData& data) = 0;
+
+        template <typename DT>
+        void receive(const DT& data)
         {
-            return mediator;
+            std::cout << "start receiving" << std::endl;
+            auto d = ConcreteData(data);
+            this->handler(d);
         }
-
-        /*
-        template <typename ST, typename... Args>
-        static std::shared_ptr<ASystem> create(const Args&... args) noexcept
-        {
-            static_assert(std::is_base_of<ASystem, ST>::value,
-                          "addSystem function should be called with a type inheriting from ASystem");
-
-            return (std::shared_ptr<ASystem>(new ST(args...)));
-        }
-         */
-
     private:
         Mediator *mediator;
     };

@@ -15,16 +15,27 @@ namespace Sex {
         std::unique_ptr<Mediator> mediator;
     public:
 
+        Core() : mediator(std::make_unique<Mediator>()) {}
+        ~Core() = default;
+
+
         template<typename ST, typename... Args>
-        void addSystem(Args &... args) {
+        void emplaceSystem(Args &... args) {
             static_assert(std::is_base_of<ASystem, ST>::value,
                           "addSystem function should be called with a type inheriting from ASystem");
 
-            //ASystem::create<ST>(args...)
             auto s = std::make_shared<ST>(mediator.get(), args...);
             _systems.emplace(utils::IndexType::get<ST>(), s);
-            mediator->addSystem(static_cast<ASystem *>(s.get()));
+            mediator->addSystem(s.get());
         }
+
+        template <typename ST>
+        ST& getSystem()
+        {
+            auto& ptr= _systems.at(utils::IndexType::get<ST>());
+            return (static_cast<ST&>(*ptr));
+        }
+
         Mediator *getMediator() const
         {
             return (mediator.get());
