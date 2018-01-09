@@ -20,17 +20,16 @@ namespace utils
         template <typename Med>
         Module(Med *m) : ASystem(m)
         {
-            addHandler<Events...>();
+            {(addHandler<Events>())...};
         }
 
         template <typename DT>
         void addHandler() {
             auto id = utils::IndexType::get<DT>();
             this->_fptr.emplace(id,
-                                [this](const AbstractData& abstractData)
-                                {
+                                [this](const AbstractData &abstractData) {
                                     std::cout << "I'm an handler" << std::endl;
-                                    auto toSend = static_cast<const ConcreteData<DT>&>(abstractData);
+                                    auto toSend = static_cast<const ConcreteData <DT> &>(abstractData);
                                     static_cast<CRTP *>(this)->handle(toSend.data);
                                 });
         }
