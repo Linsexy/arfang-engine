@@ -45,7 +45,7 @@ namespace Sex {
         void receive(const DT& data)
         {
             std::cout << "start receiving" << std::endl;
-            auto d = ConcreteData(data);
+            auto d = ConcreteData<DT>(data);
             this->handler(d);
         }
     private:

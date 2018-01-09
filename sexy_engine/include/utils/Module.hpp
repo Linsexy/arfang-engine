@@ -5,7 +5,8 @@
 #ifndef RTYPE_MODULE_HPP
 #define RTYPE_MODULE_HPP
 
-#include <ecs/ASystem.hpp>
+#include <unordered_map>
+#include "ecs/ASystem.hpp"
 #include "IndexType.hpp"
 
 namespace utils
