@@ -2,6 +2,18 @@
 
 ### How to use Entities and Components
 
+```cpp
+int main()
+{
+    GameObject Mylan;
+    Mylan.attachComponent<PosComponent>(17, 27); /* creates a PosComponent with 17, 27 as parameters */
+    if (Mylan.hasComponent<PosComponent>()) {
+        auto const &pos = Mylan.getComponent<PosComponent>();
+        std::cout << pos.x << std::endl;
+    }
+}
+```
+
 #### Every system needs to inherit from Module templated on the System itself.
 #### The other template parameters represent all the types it wants to receive.
 
