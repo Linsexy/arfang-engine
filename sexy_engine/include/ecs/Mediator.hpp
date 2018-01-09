@@ -21,15 +21,14 @@ namespace Sex {
         template<typename ST, typename T>
         void transmit(const ST *sender, const T &transmit) {
              auto id = utils::IndexType::get<T>();
-            std::cout << "still transmitting " << id << std::endl;
             for (const auto &sys : _systems) {
-                for (auto x : sys.second)
+                /*for (auto x : sys.second)
                 {
                     std::cout << x << std::endl;
-                }
+                }*/
                 std::cout << std::endl;
                 if (sys.first != sender && std::find(sys.second.begin(), sys.second.end(), id) != sys.second.end()) {
-                    std::cout << "Jean Michel !" << std::endl;
+                    //std::cout << "Jean Michel !" << std::endl;
                     sys.first->receive(transmit);
                 }
             }

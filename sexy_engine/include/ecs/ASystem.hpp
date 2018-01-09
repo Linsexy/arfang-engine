@@ -44,7 +44,7 @@ namespace Sex {
         template <typename DT>
         void receive(const DT& data)
         {
-            std::cout << "start receiving" << std::endl;
+            //std::cout << "start receiving" << std::endl;
             auto d = ConcreteData<DT>(data);
             this->handler(d);
         }

@@ -7,7 +7,6 @@
 
 #include <unordered_map>
 #include "ecs/ASystem.hpp"
-#include "IndexType.hpp"
 
 namespace Sex
 {
@@ -26,31 +25,26 @@ namespace Sex
             (addHandler<Events>(),...);
         }
 
+        virtual ~Module() = default;
+
         template <typename DT>
         void addHandler() {
             auto id = utils::IndexType::get<DT>();
             this->_fptr.emplace(id,
                                 [this](const AbstractData &abstractData) {
-                                    std::cout << "I'm an handler" << std::endl;
+                                    //std::cout << "I'm an handler" << std::endl;
                                     auto toSend = static_cast<const ConcreteData <DT> &>(abstractData);
                                     static_cast<CRTP *>(this)->handle(toSend.data);
                                 });
         }
 
-        virtual ~Module() = default;
 
         virtual void handler(const AbstractData& data) override
         {
-            std::cout << "still receiving" << std::endl;
             auto ret = _fptr.find(data.mType);
-            std::cout << data.mType << std::endl;
-            for (auto a : _fptr)
-            {
-                std::cout << "-> " << a.first << std::endl;
-            }
             if (ret != _fptr.end())
             {
-                std::cout << "found someone" << std::endl;
+                //std::cout << "found someone" << std::endl;
                 ret->second(data);
             }
         }
@@ -63,7 +57,7 @@ namespace Sex
         template <typename T>
         void transmit(const T& t)
         {
-            std::cout << "Transmitting" << std::endl;
+            //std::cout << "Transmitting" << std::endl;
             static_cast<CRTP *>(this)->getMediator()->transmit(static_cast<CRTP *>(this), t);
         }
 
