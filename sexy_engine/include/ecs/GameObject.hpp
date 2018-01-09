@@ -5,12 +5,12 @@
 #ifndef ECS_GAMEOBJECT_HPP
 #define ECS_GAMEOBJECT_HPP
 
-//Stands for "entities" in a ECS design pattern
-
 #include <unordered_map>
 #include <memory>
 #include "IComponent.hpp"
 #include "utils/IndexType.hpp"
+
+//Stands for "entities" in a ECS design pattern
 
 class GameObject
 {
@@ -28,7 +28,7 @@ public:
     }
 
     template <typename CT>
-    CT& getComponent()
+    CT& getComponent() const
     {
         static_assert(std::is_base_of<IComponent, CT>::value,
                       "You have to attach components, not ponies.");
@@ -38,9 +38,20 @@ public:
     }
 
     template <typename CT>
-    bool hasComponent()
+    bool hasComponent() const noexcept
     {
         return (_components.find(utils::IndexType::get<CT>()) != _components.end());
+    }
+
+    template <typename CT>
+    void detachComponent()
+    {
+        auto it _components.find(utils::IndexType::get<CT>());
+        if (it == _components.end())
+        {
+            throw (std::out_of_range("Component not in Entity"));
+        }
+        _components.erase(it);
     }
 
 private:
