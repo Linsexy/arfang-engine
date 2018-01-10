@@ -7,6 +7,7 @@
 
 #include <unordered_map>
 #include "ecs/ASystem.hpp"
+#include "GameObject.hpp"
 
 namespace Sex
 {

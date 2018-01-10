@@ -36,6 +36,13 @@ namespace Sex {
             return (static_cast<ST&>(*ptr));
         }
 
+        template <typename ST>
+        const ST& getSystem() const
+        {
+            auto& ptr= _systems.at(utils::IndexType::get<ST>());
+            return (static_cast<ST&>(*ptr));
+        }
+
         Mediator *getMediator() const
         {
             return (mediator.get());

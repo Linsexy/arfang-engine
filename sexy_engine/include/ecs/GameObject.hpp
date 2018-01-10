@@ -19,22 +19,40 @@ public:
     ~GameObject() = default;
 
     template <typename CT, typename... Args>
-    void attachComponent(Args const&... args) noexcept
+    bool emplaceComponent(Args const&... args) noexcept
     {
         static_assert(std::is_base_of<IComponent, CT>::value,
                       "You have to attach components, not ponies.");
 
-        _components.emplace(utils::IndexType::get<CT>(), std::make_shared<CT>(args...));
+        return (_components.emplace(utils::IndexType::get<CT>(), std::make_shared<CT>(args...)).second);
     }
 
     template <typename CT>
-    CT& getComponent() const
+    bool addComponent(CT& component)
+    {
+        static_assert(std::is_base_of<IComponent, CT>::value,
+                      "You have to attach components, not ponies.");
+        return (_components.emplace(utils::IndexType::get<CT>(), std::make_shared<CT>(component)).second);
+    }
+
+    template <typename CT>
+    CT& getComponent()
     {
         static_assert(std::is_base_of<IComponent, CT>::value,
                       "You have to attach components, not ponies.");
 
-        auto& ptr= _components.at(utils::IndexType::get<CT>());
+        const auto& ptr= _components.at(utils::IndexType::get<CT>());
         return (static_cast<CT&>(*ptr));
+    }
+
+    template <typename CT>
+    const CT& getComponent() const
+    {
+        static_assert(std::is_base_of<IComponent, CT>::value,
+                      "You have to attach components, not ponies.");
+
+        const auto& ptr= _components.at(utils::IndexType::get<CT>());
+        return (static_cast<const CT&>(*ptr));
     }
 
     template <typename CT>
@@ -46,7 +64,7 @@ public:
     template <typename CT>
     void detachComponent()
     {
-        auto it _components.find(utils::IndexType::get<CT>());
+        auto it = _components.find(utils::IndexType::get<CT>());
         if (it == _components.end())
         {
             throw (std::out_of_range("Component not in Entity"));
