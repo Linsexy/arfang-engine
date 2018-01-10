@@ -7,6 +7,7 @@
 
 struct IComponent
 {
+    virtual ~IComponent() = default;
 };
 
 #endif //ECS_ICOMPONENT_HPP
