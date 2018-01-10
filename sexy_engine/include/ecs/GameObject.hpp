@@ -28,7 +28,7 @@ public:
     }
 
     template <typename CT>
-    bool addComponent(CT& component)
+    bool addComponent(CT& component) noexcept
     {
         static_assert(std::is_base_of<IComponent, CT>::value,
                       "You have to attach components, not ponies.");
