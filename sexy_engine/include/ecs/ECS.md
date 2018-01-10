@@ -14,8 +14,8 @@ int main()
 }
 ```
 
-#### Every system needs to inherit from Module templated on the System itself.
-#### The other template parameters represent all the types it wants to receive.
+##### Every system needs to inherit from Module templated on the System itself.
+##### The other template parameters represent all the types it wants to receive.
 
 ```cpp
 
@@ -38,7 +38,7 @@ public:
 
 /* will receive int */
 class Other : public utils::Module<Other,
-                                   int>
+                                   int> /* template it on each type you want to receive */
 {
 public:
     Other(Sex::Mediator *m) : utils::Module<Other, int>(m) {}
@@ -57,7 +57,7 @@ int main()
     Sex::Core core; /* handle the main loop of the program */
 
     core.emplaceSystem<System>(); /* create the system System and save it */
-    core.emplaceSystem<Other>();
+    core.emplaceSystem<Other>(); /* Always prefere emplaceSystem if possible */
 
     Other& o = core.getSystem<Other>() /* retrieve a System with it's type */;
     std::string msg("Hello there");
