@@ -26,12 +26,9 @@ namespace utils {
         template<typename... Args>
         static auto getMany() noexcept {
             using expander = std::vector<unsigned int>;
+            static const auto ret = expander{(get<Args>())...};
 
-            static const auto ret = expander{0, (get<Args>())...};
-            static const std::vector<unsigned int> rret(ret.begin() + 1, ret.end());
-
-            /* need to change to fit well with c++17 */
-            return rret;
+            return ret;
         }
     };
 }
