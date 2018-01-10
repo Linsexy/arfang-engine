@@ -52,6 +52,7 @@ public:
 ```
 ### How to use Systems
 
+```cpp
 int main()
 {
     Sex::Core core; /* handle the main loop of the program */
