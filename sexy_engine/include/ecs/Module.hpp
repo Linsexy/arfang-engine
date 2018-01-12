@@ -7,6 +7,7 @@
 
 #include <unordered_map>
 #include "ecs/ASystem.hpp"
+#include "utils/IndexType.hpp"
 #include "GameObject.hpp"
 
 namespace Sex
@@ -63,7 +64,8 @@ namespace Sex
         }
 
     private:
-        std::unordered_map<unsigned int, std::function<void(const AbstractData&)> > _fptr;
+        std::unordered_map<unsigned int,
+    						std::function <void(const AbstractData&)> > _fptr;
     };
 }
 

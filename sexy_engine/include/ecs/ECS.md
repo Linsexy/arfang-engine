@@ -20,11 +20,11 @@ int main()
 ```cpp
 
 /* will receive std::string */
-class System : public utils::Module<System,
+class System : public Sex::Module<System,
                                     std::string>
 {
 public:
-    System(Sex::Mediator * m) : utils::Module<System, std::string>(m)
+    System(Sex::Mediator * m) : Sex::Module<System, std::string>(m)
     {
 
     }
@@ -37,11 +37,11 @@ public:
 
 
 /* will receive int */
-class Other : public utils::Module<Other,
+class Other : public Sex::Module<Other,
                                    int> /* template it on each type you want to receive */
 {
 public:
-    Other(Sex::Mediator *m) : utils::Module<Other, int>(m) {}
+    Other(Sex::Mediator *m) : Sex::Module<Other, int>(m) {}
 
     void handle(int zizi)
     {

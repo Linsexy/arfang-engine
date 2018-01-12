@@ -8,11 +8,11 @@
 #include <algorithm>
 #include <unordered_map>
 #include <utils/IndexType.hpp>
+#include "ASystem.hpp"
 
 //same func in Interface and Module
 
 namespace Sex {
-    class ASystem;
     class Mediator/* : public BaseMediator<Mediator>*/ {
     public:
         Mediator() = default;
