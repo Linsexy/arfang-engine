@@ -7,6 +7,7 @@
 
 #include <unordered_map>
 #include "ecs/ASystem.hpp"
+#include "ecs/Mediator.hpp"
 #include "utils/IndexType.hpp"
 #include "GameObject.hpp"
 #include "Mediator.hpp"

@@ -7,7 +7,7 @@
 
 #include <unordered_map>
 #include <memory>
-#include "IComponent.hpp"
+#include "ecs/Components/IComponent.hpp"
 #include "utils/IndexType.hpp"
 
 //Stands for "entities" in a ECS design pattern

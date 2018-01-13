@@ -5,7 +5,7 @@
 #ifndef ECS_POSCOMPONENT_HPP
 #define ECS_POSCOMPONENT_HPP
 
-#include "IComponent.hpp"
+#include "ecs/Components/IComponent.hpp"
 
 struct PosComponent : public IComponent
 {
