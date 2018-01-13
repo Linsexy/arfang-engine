@@ -9,6 +9,7 @@
 #include <iostream>
 #include <functional>
 #include <utils/IndexType.hpp>
+#include "GameObject.hpp"
 
 namespace Sex {
     class Mediator;
@@ -37,10 +38,12 @@ namespace Sex {
 
         virtual ~ASystem() = default;
 
-        Mediator *getMediator() {return mediator;}
+        Mediator *getMediator() const {return mediator;}
 
+    protected:
         virtual void handler(const AbstractData& data) = 0;
 
+    public:
         template <typename DT>
         void receive(const DT& data)
         {
@@ -48,7 +51,8 @@ namespace Sex {
             auto d = ConcreteData<DT>(data);
             this->handler(d);
         }
-    private:
+
+    protected:
         Mediator *mediator;
     };
 }

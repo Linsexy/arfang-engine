@@ -9,6 +9,7 @@
 #include "ecs/ASystem.hpp"
 #include "utils/IndexType.hpp"
 #include "GameObject.hpp"
+#include "Mediator.hpp"
 
 namespace Sex
 {
@@ -29,6 +30,7 @@ namespace Sex
 
         virtual ~Module() = default;
 
+    private:
         template <typename DT>
         void addHandler() {
             auto id = utils::IndexType::get<DT>();
@@ -40,7 +42,18 @@ namespace Sex
                                 });
         }
 
+    public:
+        template <typename ET, typename... Args>
+        std::shared_ptr<ET> createObject(const Args&... args) const
+        {
+            static_assert(std::is_base_of<GameObject, ET>::value,
+                          "This function aims creating GameObjects, not your shit");
+            auto ret = std::make_shared<ET>(args...);
+            transmit(ret);
+            return (ret);
+        }
 
+    protected:
         virtual void handler(const AbstractData& data) override
         {
             auto ret = _fptr.find(data.mType);
@@ -51,16 +64,16 @@ namespace Sex
             }
         }
 
+    public:
         auto getTypes() const noexcept {
             return (utils::IndexType::getMany<Events...>());
         }
 
-    public:
         template <typename T>
-        void transmit(const T& t)
+        void transmit(const T& t) const
         {
             //std::cout << "Transmitting" << std::endl;
-            static_cast<CRTP *>(this)->getMediator()->transmit(static_cast<CRTP *>(this), t);
+            mediator->transmit(static_cast<const CRTP *>(this), t);
         }
 
     private:

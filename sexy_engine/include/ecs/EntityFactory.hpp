@@ -7,14 +7,22 @@
 
 #include "Module.hpp"
 
+/*
 namespace Sex {
+    
     class EntityFactory : public Module<EntityFactory>
     {
+    public:
         EntityFactory(Mediator *m) : Module<EntityFactory>(m)
         {}
         virtual ~EntityFactory() = default;
 
-        //static
+    private:
+        template <typename ET>
+        void handle(const Args&... args)
+        {
+        };
     };
 }
+ */
 #endif //RTYPE_ENTITYFACTORY_HPP

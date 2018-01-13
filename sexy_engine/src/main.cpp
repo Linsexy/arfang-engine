@@ -18,7 +18,7 @@ int			main()
 void        print() {
     std::cout << "J'ai clickay" << std::endl;
 }
-
+/*
 int			main()
 {
 	Graphical::SFMLLib		Lib;
@@ -64,3 +64,4 @@ int			main()
 	}
 	return (0);
 }
+ */
