@@ -82,7 +82,8 @@ struct Nimoft : public Sex::Module<Nimoft,
 
 core.emplaceSystem<Nimoft>();
 
-auto sex = o.createObject<Sex::GameObject>();
+auto sex = o.createObject<Sex::GameObject>(); /* Only way to create Entities */
+                                              /* First template argument is it's type, and others it's constructor's arguments */
 //auto sox = o.createObject<int>(); /* Doesn't work */
 
 ```
