@@ -5,7 +5,7 @@
 ```cpp
 int main()
 {
-    GameObject Mylan;
+    GameObject Mylan; /* never create GameObjects like this (example below) */
     Mylan.emplaceComponent<PosComponent>(17, 27); /* creates a PosComponent with 17, 27 as parameters */
     if (Mylan.hasComponent<PosComponent>()) {
         auto const &pos = Mylan.getComponent<PosComponent>();
@@ -25,9 +25,7 @@ class System : public Sex::Module<System,
 {
 public:
     System(Sex::Mediator * m) : Sex::Module<System, std::string>(m)
-    {
-
-    }
+    {}
 
     void handle(const std::string& string)
     {
@@ -59,9 +57,32 @@ int main()
 
     core.emplaceSystem<System>(); /* create the system System and save it */
     core.emplaceSystem<Other>(); /* Always prefere emplaceSystem if possible */
+    //core.emplaceSystem<std::string> /* doesn't work */
 
     Other& o = core.getSystem<Other>() /* retrieve a System with it's type */;
     std::string msg("Hello there");
     o.transmit(msg); /* transmit a message */
 }
+```
+
+### How to create Entities (GameObjects)
+
+```cpp
+struct Nimoft : public Sex::Module<Nimoft,
+        std::shared_ptr<Sex::GameObject>> /* template it on each type you want to receive */
+{
+    Nimoft(Sex::Mediator *m) : Sex::Module<Nimoft,
+                                            std::shared_ptr<Sex::GameObject>>(m) {}
+
+    void handle(const std::shared_ptr<Sex::GameObject>& entity)
+    {
+        std::cout << "I received " << entity->getId() << std::endl;
+    }
+};
+
+core.emplaceSystem<Nimoft>();
+
+auto sex = o.createObject<Sex::GameObject>();
+//auto sox = o.createObject<int>(); /* Doesn't work */
+
 ```
