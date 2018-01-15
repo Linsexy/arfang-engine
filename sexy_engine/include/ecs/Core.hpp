@@ -8,14 +8,25 @@
 /* Core class of the engine */
 #include <memory>
 #include "Mediator.hpp"
+#include "Module.hpp"
 
 namespace Sex {
-    class Core {
+    struct Event
+    {
+        enum class Type
+        {
+            UNDEFINED,
+            END_LOOP
+        };
+
+        Type t;
+    };
+    class Core : public Module<Core, Event> {
     private:
         std::unique_ptr<Mediator> mediator;
     public:
 
-        Core() : mediator(std::make_unique<Mediator>()) {}
+        Core() : mediator(std::make_unique<Mediator>()), isOver(false) {}
         ~Core() = default;
 
 
@@ -48,7 +59,10 @@ namespace Sex {
             return (mediator.get());
         }
 
+        void go();
+
     private:
+        bool isOver;
         std::unordered_map<unsigned int, std::shared_ptr<ASystem>> _systems;
     };
 }
