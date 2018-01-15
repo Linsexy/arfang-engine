@@ -22,11 +22,8 @@ namespace Sex {
         Type t;
     };
     class Core : public Module<Core, Event> {
-    private:
-        std::unique_ptr<Mediator> mediator;
     public:
-
-        Core() : mediator(std::make_unique<Mediator>()), isOver(false) {}
+        Core();
         ~Core() = default;
 
 
@@ -54,14 +51,12 @@ namespace Sex {
             return (static_cast<ST&>(*ptr));
         }
 
-        Mediator *getMediator() const
-        {
-            return (mediator.get());
-        }
-
         void go();
 
+        void handle(const Event&);
+
     private:
+        //std::unique_ptr<Mediator> mediator;
         bool isOver;
         std::unordered_map<unsigned int, std::shared_ptr<ASystem>> _systems;
     };
