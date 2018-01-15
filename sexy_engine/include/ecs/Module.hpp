@@ -22,7 +22,7 @@ namespace Sex
     public:
 
         template <typename Med>
-        Module(Med *m) : ASystem(m)
+        Module(std::shared_ptr<Med> m = nullptr) : ASystem(m)
         {
             static_assert(std::is_base_of<Module, CRTP>::value,
             "If a System X inherits from Module, it must template it on itself (class X : public Module<X>)");
