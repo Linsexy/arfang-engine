@@ -6,9 +6,9 @@
 // Test main for SocketUDP
 int         main(void)
 {
-    Sex::Mediator mediator;
-    Net::NetworkSystem networkSystem(&mediator);
+    //Sex::Mediator mediator;
+    //Net::NetworkSystem networkSystem(&mediator);
 
-    networkSystem.ProcessPacket();
-    return (0);
+    //networkSystem.ProcessPacket();
+    //return (0);
 }

@@ -31,7 +31,7 @@ namespace Net
 		bool                            _process;
 
 	public:
-		NetworkSystem(Sex::Mediator *m) : Sex::Module<NetworkSystem, Net::PacketEvent>(m),
+		NetworkSystem(std::shared_ptr<Sex::Mediator> m) : Sex::Module<NetworkSystem, Net::PacketEvent>(m),
 										  _lastClientID(0),
 										  _socket(new SocketUDP(4242)),
 										  _thread(&NetworkSystem::ProcessPacket, this),
