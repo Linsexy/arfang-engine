@@ -12,19 +12,23 @@ namespace Proto
 {
     class ProtocolSystem : public Sex::Module<ProtocolSystem, Net::PacketEvent>
     {
+    private:
+        std::vector<unsigned int>   _connectedClients;
+
+        // Client to game server
+        void createCConnectGameEvent(Net::PacketEvent const&);
+        void createCLeaveGameEvent(Net::PacketEvent const&);
+        void createCDisconnectEvent(Net::PacketEvent const&);
+        void createCControl(Net::PacketEvent const&);
+
+        void sendResponse(unsigned int, unsigned short, Net::ReturnCode);
+        bool clientIsConnected(unsigned int);
+        bool removeClient(unsigned int);
+
     public:
         ProtocolSystem(std::shared_ptr<Sex::Mediator> m) : Sex::Module<ProtocolSystem, Net::PacketEvent>(m) {};
         ~ProtocolSystem() = default;
         void handle(Net::PacketEvent const &);
-
-    private:
-        void createConnectEvent(unsigned int, void *);
-        void createCreateGameEvent(unsigned int, void *);
-        void createLeaveGameEvent(unsigned int);
-        void createDisconnectEvent(unsigned int);
-        void createJoinGameEvent(unsigned int, void *);
-        void createGetGameListEvent(unsigned int, void *);
-
     };
 }
 

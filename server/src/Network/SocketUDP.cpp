@@ -8,7 +8,6 @@
 ** Last update lun. janv. 08 14:33:06 2018 Clement Quaresma
 */
 
-// TODO: ifdef window à mettre dans le system
 #ifdef WIN32
 
 #include <winsock2.h>
@@ -74,7 +73,7 @@ ssize_t     Net::SocketUDP::recvMsg(void *buffer, size_t length)
     Client  client;
     client.ip   = std::string(inet_ntoa(from.sin_addr));
     client.port = ntohs(from.sin_port);
-    _pendingData.push(std::make_pair(client, std::shared_ptr<int8_t>(static_cast<int8_t *>(buffer))));
+    _pendingData.push(std::make_pair(client, std::shared_ptr<int8_t>(static_cast<int8_t *>(buffer),  std::default_delete<int8_t[]>())));
 
     return (receivedBytes);
 }

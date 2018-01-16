@@ -22,26 +22,24 @@ void        Net::NetworkSystem::ProcessPacket()
             PacketEvent         receivedPacket;
             Net::Packet         *tmp;
 
-            //TODO: Segfault with CLION, possibly double free and problem with shared ptr
             auto data = _socket->getPendingData(client.ip, client.port);
 
             receivedPacket.clientId = getClientId(client);
-
+            std::cout << "Packet received from client n°" << receivedPacket.clientId << std::endl;
+            std::cout << data << std::endl;
             tmp = reinterpret_cast<Net::Packet *>(data.get());
             receivedPacket.code = tmp->actionType;
+            receivedPacket.data = NULL; // tmp
             //std::memcpy(&receivedPacket.data, &data, sizeof(data));
 
             // TODO: Use RequestID for packet lost
             // -> tmp.requestId
 
-            // TODO: push in _packetReceived the created packet
             _packetsReceived.push(receivedPacket);
         }
         _packetsMutex.unlock();
 
         _packetsMutex.lock();
-        // TODO: pop packet from _packetToSend
-
         if (!_packetsToSend.empty())
         {
             auto sendingPacket = _packetsToSend.front();
@@ -50,7 +48,6 @@ void        Net::NetworkSystem::ProcessPacket()
         }
         _packetsMutex.unlock();
 
-        // send a packet
     }
 }
 

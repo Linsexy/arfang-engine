@@ -2,6 +2,8 @@
 // Created by mymy on 09/01/18.
 //
 
+#include <cstring>
+#include <ReturnCode.hpp>
 #include "Protocol/ProtocolSystem.hpp"
 #include "Protocol/ProtocolError.hpp"
 #include "Protocol/Events/Events.hpp"
@@ -9,82 +11,103 @@
 
 void Proto::ProtocolSystem::handle(Net::PacketEvent const &packet)
 {
+    if (packet.code != Proto::ActionType::C_CONNECT_GAME && !this->clientIsConnected(packet.clientId))
+    {
+        this->sendResponse(packet.clientId, packet.code, Net::ReturnCode::NOT_AUTHORIZED);
+        return ;
+    }
     switch (packet.code)
     {
-        case Proto::ActionType::CONNECT :
-            this->createConnectEvent(packet.clientId, packet.data);
+        case Proto::ActionType::C_CONNECT_GAME :
+            this->createCConnectGameEvent(packet);
             break;
-        case Proto::ActionType::CONTROL :
+        case Proto::ActionType::C_LEAVE_GAME :
+            this->createCLeaveGameEvent(packet);
             break;
-        case Proto::ActionType::CREATE_GAME :
-            this->createCreateGameEvent(packet.clientId, packet.data);
+        case Proto::ActionType::C_DISCONNECT :
+            this->createCDisconnectEvent(packet);
             break;
-        case Proto::ActionType::DISCONNECT :
-            this->createDisconnectEvent(packet.clientId);
-            break;
-        case Proto::ActionType::GET_GAME_LIST :
-            this->createGetGameListEvent(packet.clientId, packet.data);
-            break;
-        case Proto::ActionType::JOIN_GAME :
-            this->createJoinGameEvent(packet.clientId, packet.data);
-            break;
-        case Proto::ActionType::LEAVE_GAME :
-            this->createLeaveGameEvent(packet.clientId);
+        case Proto::ActionType::C_CONTROL :
+            this->createCControl(packet);
             break;
         default:
             throw ProtocolError("Unknown code");
     }
+    delete(packet.data);
 }
 
-void Proto::ProtocolSystem::createConnectEvent(unsigned int clientId, void *data)
+void Proto::ProtocolSystem::sendResponse(unsigned int clientId, unsigned short code, Net::ReturnCode rstatus)
 {
-    ConnectEvent event;
+    Net::PacketEvent    resPacket;
 
-    event.clientId = clientId;
-    event.pseudo = std::string(static_cast<char *>(data));
-    this->transmit(event);
+    resPacket.clientId = clientId;
+    resPacket.code = code;
+    resPacket.critical = true;
+    Net::ReturnCode *rstatusData = new(Net::ReturnCode);
+    *rstatusData = rstatus;
+    std::memcpy(&resPacket.data, rstatusData, sizeof(Net::ReturnCode));
+    this->transmit(resPacket);
 }
 
-void Proto::ProtocolSystem::createCreateGameEvent(unsigned int clientId, void *data)
+void Proto::ProtocolSystem::createCConnectGameEvent(Net::PacketEvent const& packet)
 {
-    CreateGameEvent event;
+    CConnectEvent       event;
 
-    event.clientId = clientId;
-    event.gameName = std::string(static_cast<char *>(data));
+
+    event.clientId = packet.clientId;
+    _connectedClients.push_back(packet.clientId);
+    event.pseudo = std::string(reinterpret_cast<char *>(packet.data));
     this->transmit(event);
+    this->sendResponse(packet.clientId, packet.code, Net::ReturnCode::OK);
 }
 
-void Proto::ProtocolSystem::createLeaveGameEvent(unsigned int clientId)
+void Proto::ProtocolSystem::createCLeaveGameEvent(Net::PacketEvent const& packet)
 {
-    LeaveGameEvent event;
+    CLeaveGameEvent event;
 
-    event.clientId = clientId;
+    event.clientId = packet.clientId;
     this->transmit(event);
+    this->sendResponse(packet.clientId, packet.code, Net::ReturnCode::OK);
 }
 
-void Proto::ProtocolSystem::createDisconnectEvent(unsigned int clientId)
+void Proto::ProtocolSystem::createCDisconnectEvent(Net::PacketEvent const& packet)
 {
-    DisconnectEvent event;
+    CDisconnectEvent event;
 
-    event.clientId = clientId;
+    event.clientId = packet.clientId;
+    this->removeClient(packet.clientId);
     this->transmit(event);
+    this->sendResponse(packet.clientId, packet.code, Net::ReturnCode::OK);
 }
 
-void Proto::ProtocolSystem::createJoinGameEvent(unsigned int clientId, void *data)
+void Proto::ProtocolSystem::createCControl(Net::PacketEvent const& packet)
 {
-    JoinGameEvent event;
+    CControlEvent   event;
 
-    event.clientId = clientId;
-    event.idGame = *(static_cast<unsigned int *>(data));
+    event.clientId  = packet.clientId;
+    event.action    = *reinterpret_cast<CControlEvent::Control *>(packet.data);
+    event.data      = std::string(reinterpret_cast<char *>(&packet.data[sizeof(CControlEvent::Control)]));
     this->transmit(event);
+    this->sendResponse(packet.clientId, packet.code, Net::ReturnCode::OK);
 }
 
-void Proto::ProtocolSystem::createGetGameListEvent(unsigned int clientId, void *data)
+bool Proto::ProtocolSystem::clientIsConnected(unsigned int clientId)
 {
-    GetGameListEvent event;
+    auto found = std::find_if(_connectedClients.begin(), _connectedClients.end(),
+                              [clientId](auto const &elem){
+                                  return (elem == clientId);
+                              });
+    return (found == _connectedClients.end());
+}
 
-    event.clientId = clientId;
-    event.fromIdGame = *(static_cast<unsigned int *>(data));
-    event.nbGames = *(reinterpret_cast<unsigned int *>(static_cast<unsigned char *>(data) + sizeof(unsigned int)));
-    this->transmit(event);
+bool Proto::ProtocolSystem::removeClient(unsigned int clientId)
+{
+    auto found = std::find_if(_connectedClients.begin(), _connectedClients.end(),
+                              [clientId](auto const &elem){
+                                  return (elem == clientId);
+                              });
+    if (found == _connectedClients.end())
+        return false;
+    _connectedClients.erase(found);
+    return true;
 }
