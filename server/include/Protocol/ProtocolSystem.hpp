@@ -26,7 +26,7 @@ namespace Proto
         bool removeClient(unsigned int);
 
     public:
-        ProtocolSystem(std::shared_ptr<Sex::Mediator> m) : Sex::Module<ProtocolSystem, Net::PacketEvent>(m) {};
+        ProtocolSystem(std::shared_ptr<Sex::Mediator> m) : Sex::Module<ProtocolSystem, Net::PacketEvent>(m, "ProtocolSystem") {};
         ~ProtocolSystem() = default;
         void handle(Net::PacketEvent const &);
     };

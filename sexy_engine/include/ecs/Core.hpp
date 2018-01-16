@@ -7,6 +7,7 @@
 
 /* Core class of the engine */
 #include <memory>
+#include <DLLoader/DLLoader.hpp>
 #include "Mediator.hpp"
 #include "Module.hpp"
 
@@ -23,7 +24,7 @@ namespace Sex {
     };
     class Core : public Module<Core, Event> {
     public:
-        Core();
+        Core(/*const std::string& entityDir, const std::string &systemDir*/);
         ~Core() = default;
 
 
@@ -31,10 +32,19 @@ namespace Sex {
         void emplaceSystem(Args &... args) {
             static_assert(std::is_base_of<ASystem, ST>::value,
                           "addSystem function should be called with a type inheriting from ASystem");
+            static_assert(utils::is_named<ST>::value,
+                            "You should have a classname that rocks. Refer to Named class for details.");
 
-            auto s = std::make_shared<ST>(mediator, args...);
-            _systems.emplace(utils::IndexType::get<ST>(), s);
-            mediator->addSystem(s.get());
+            //dlLoader.dlOpen() blabla;
+            auto s = std::make_unique<ST>(mediator, args...);
+           // _systems.emplace(utils::IndexType::get<ST>(), std::move(s));
+           // mediator->addSystem(s.get());
+        }
+
+        template <typename... Systems>
+        void loadSystems()
+        {
+            (emplaceSystem<Systems>(),...);
         }
 
         template <typename ST>
@@ -55,10 +65,17 @@ namespace Sex {
 
         void handle(const Event&);
 
+        void setEntityDir(const std::string &);
+        void setSystemDir(const std::string &);
+
+
     private:
-        //std::unique_ptr<Mediator> mediator;
         bool isOver;
-        std::unordered_map<unsigned int, std::shared_ptr<ASystem>> _systems;
+        std::unordered_map<unsigned int, std::unique_ptr<ASystem>> _systems;
+
+        std::string entitiesDir;
+        std::string systemsDir;
+        utils::DLLoader dlLoader;
     };
 }
 

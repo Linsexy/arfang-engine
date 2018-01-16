@@ -15,8 +15,15 @@ void Sex::Core::go()
     }
 }
 
-Sex::Core::Core() : Module<Core, Event>(std::make_shared<Mediator>()), isOver(false)
+Sex::Core::Core()
+        : Module<Core, Event>(std::make_shared<Mediator>(), "Core"), isOver(false)
 {}
+
+void Sex::Core::setEntityDir(const std::string &s) {
+    entitiesDir = s;
+}
+
+void Sex::Core::setSystemDir(const std::string &s) {systemsDir = s;}
 
 void Sex::Core::handle(const Event &e)
 {
