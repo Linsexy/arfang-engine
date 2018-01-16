@@ -7,14 +7,15 @@
 
 namespace Net
 {
+
     struct  PacketEvent
     {
-        // add bool critic;
         unsigned int    clientId;
         unsigned short  code;
-        void            *data;
+        // 'critical' describe if the request must be resend if not received or not.
+        bool            critical;
+        int8_t          *data;
     };
 }
-
 
 #endif //RTYPE_PACKET_HPP

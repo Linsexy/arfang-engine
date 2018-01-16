@@ -19,7 +19,7 @@ namespace   Net
     public:
         virtual ssize_t	    sendMsg(std::string const &, uint16_t, const void *, size_t) = 0;
 
-        bool        hasPendingData() const
+        bool                hasPendingData() const
         {
             return (!_pendingData.empty());
         }
@@ -33,7 +33,7 @@ namespace   Net
             return (data.second);
         }
 
-        ssize_t     recvData(size_t length)
+        ssize_t                         recvData(size_t length)
         {
             void    *buffer = new int8_t[length];
             return (this->recvMsg(buffer, length));
