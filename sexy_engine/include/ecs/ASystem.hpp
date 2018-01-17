@@ -9,6 +9,7 @@
 #include <iostream>
 #include <functional>
 #include <utils/IndexType.hpp>
+#include "GameObject.hpp"
 
 namespace Sex {
     class Mediator;
@@ -31,16 +32,18 @@ namespace Sex {
 
 
     public:
-        ASystem(Mediator *m = nullptr) : mediator(m)
+        ASystem(const std::shared_ptr<Mediator> &m = nullptr) : mediator(m)
         {}
         virtual void update() {};
 
         virtual ~ASystem() = default;
 
-        Mediator *getMediator() {return mediator;}
+        Mediator *getMediator() const {return mediator.get();}
 
+    protected:
         virtual void handler(const AbstractData& data) = 0;
 
+    public:
         template <typename DT>
         void receive(const DT& data)
         {
@@ -48,8 +51,9 @@ namespace Sex {
             auto d = ConcreteData<DT>(data);
             this->handler(d);
         }
-    private:
-        Mediator *mediator;
+
+    protected:
+        std::shared_ptr<Mediator> mediator;
     };
 }
 #endif //PROJECT_ASYSTEM_HPP
