@@ -25,7 +25,7 @@ std::string utils::Named<T>::name = "";
 namespace utils {
     template<typename T>
     struct is_named {
-        static const bool value = std::is_base_of<Named<T>, T>::value && T::name.length() > 3;
+        static const bool value = std::is_base_of<Named<T>, T>::value;
     };
 }
 

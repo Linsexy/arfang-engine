@@ -23,7 +23,7 @@ namespace Sex
     public:
 
         template <typename Med>
-        Module(const std::shared_ptr<Med> &m = nullptr, const std::string &className="")
+        Module(const std::shared_ptr<Med> &m = nullptr, const std::string &className="NoClassName")
                 : ASystem(m), utils::Named<CRTP>(className)
         {
             static_assert(std::is_base_of<Module, CRTP>::value,
