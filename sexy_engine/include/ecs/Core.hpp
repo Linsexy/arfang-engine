@@ -29,16 +29,15 @@ namespace Sex {
 
 
         template<typename ST, typename... Args>
-        void emplaceSystem(Args &... args) {
+        void emplaceSystem(const Args &... args) {
             static_assert(std::is_base_of<ASystem, ST>::value,
                           "addSystem function should be called with a type inheriting from ASystem");
             static_assert(utils::is_named<ST>::value,
                             "You should have a classname that rocks. Refer to Named class for details.");
 
-            //dlLoader.dlOpen() blabla;
             auto s = std::make_unique<ST>(mediator, args...);
-           // _systems.emplace(utils::IndexType::get<ST>(), std::move(s));
-           // mediator->addSystem(s.get());
+            _systems.emplace(utils::IndexType::get<ST>(), std::move(s));
+            mediator->addSystem(s.get());
         }
 
         template <typename... Systems>
@@ -60,6 +59,8 @@ namespace Sex {
             auto& ptr= _systems.at(utils::IndexType::get<ST>());
             return (static_cast<ST&>(*ptr));
         }
+
+        void loadSystemsIn(const std::string &dirName);
 
         void go();
 
