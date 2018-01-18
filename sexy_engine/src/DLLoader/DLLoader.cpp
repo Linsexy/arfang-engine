@@ -12,7 +12,7 @@
 #include "DLLoader/DLLoader.hpp"
 #include "DLLoader/DLErrors.hpp"
 
-void    Sex::DLLoader::dlOpen(std::string const &fileName)
+void    utils::DLLoader::dlOpen(std::string const &fileName)
 {
 #ifdef WIN32
     HINSTANCE dlHandle;
@@ -28,7 +28,7 @@ void    Sex::DLLoader::dlOpen(std::string const &fileName)
     this->_dlHandles.emplace_back(std::make_pair(fileName, dlHandle));
 }
 
-void    Sex::DLLoader::dlClose(std::string const &fileName)
+void    utils::DLLoader::dlClose(std::string const &fileName)
 {
     auto dlHandle = std::find_if(_dlHandles.begin(), _dlHandles.end(),
                                  [fileName](const auto &elem){ return elem.first == fileName; });
@@ -46,7 +46,7 @@ void    Sex::DLLoader::dlClose(std::string const &fileName)
         throw DLErrors("This dll was never opened.");
 }
 
-void    Sex::DLLoader::dlCloseAll() noexcept
+void    utils::DLLoader::dlCloseAll() noexcept
 {
     for (auto &dlHandle : _dlHandles)
     {
@@ -59,7 +59,7 @@ void    Sex::DLLoader::dlCloseAll() noexcept
     _dlHandles.clear();
 }
 
-void    *Sex::DLLoader::dlSym(std::string const &fileName, std::string const &sym) const
+void    *utils::DLLoader::dlSym(std::string const &fileName, std::string const &sym) const
 {
     auto dlHandle = std::find_if(_dlHandles.begin(), _dlHandles.end(),
                                 [fileName](const auto &elem) { return elem.first == fileName; });

@@ -5,3 +5,6 @@ VsBuild/
 Debug/
 Release/
 .vs/
+rtype_main
+rtype_client
+rtype_server

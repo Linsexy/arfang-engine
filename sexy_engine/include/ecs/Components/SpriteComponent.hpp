@@ -2,10 +2,10 @@
 
 #include <string>
 
-#include "Graphical/Tools.hpp"
 #include "ecs/Components/IComponent.hpp"
 #include "ecs/Components/PosComponent.hpp"
 #include "ecs/Components/DimensionComponent.hpp"
+#include <Tools.hpp>
 
 namespace Graphical
 {
@@ -13,18 +13,18 @@ namespace Graphical
 	{
 		struct SpriteData
 		{
-			std::string				image;
-			Vector2D				size;
-			Vector2D				displaySize;
-			unsigned int		    depth;
+			std::string	    			image;
+			Sex::Vector2D				size;
+			Sex::Vector2D				displaySize;
+			unsigned int	    	    depth;
 		};
-		SpriteData					sprite;
+		SpriteData				    	sprite;
 
 		struct AnimationData
 		{
-			unsigned int			length;
-			unsigned int			number;
-			unsigned int			frame;
+			unsigned int			    length;
+			unsigned int		    	number;
+			unsigned int			    frame;
 		};
 		AnimationData				animation;
 

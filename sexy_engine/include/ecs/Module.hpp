@@ -6,6 +6,7 @@
 #define RTYPE_MODULE_HPP
 
 #include <unordered_map>
+#include <utils/Named.hpp>
 #include "ecs/ASystem.hpp"
 #include "ecs/Mediator.hpp"
 #include "utils/IndexType.hpp"
@@ -17,12 +18,13 @@ namespace Sex
 
     /* If A inherits from Module, CRTP must be A */
     template<typename CRTP, typename... Events>
-    class Module : public ASystem
+    class Module : public ASystem, public utils::Named<CRTP>
     {
     public:
 
         template <typename Med>
-        Module(const std::shared_ptr<Med> &m = nullptr) : ASystem(m)
+        Module(const std::shared_ptr<Med> &m = nullptr, const std::string &className="NoClassName")
+                : ASystem(m), utils::Named<CRTP>(className)
         {
             static_assert(std::is_base_of<Module, CRTP>::value,
             "If a System X inherits from Module, it must template it on itself (class X : public Module<X>)");
@@ -50,7 +52,8 @@ namespace Sex
             static_assert(std::is_base_of<GameObject, ET>::value,
                           "This function aims creating GameObjects, not your shit");
             auto ret = std::make_shared<ET>(args...);
-            transmit(ret);
+            std::cout << static_cast<const std::shared_ptr<GameObject> &>(ret)->getId() << std::endl;
+            transmit(static_cast<const std::shared_ptr<GameObject> &>(ret));
             return (ret);
         }
 

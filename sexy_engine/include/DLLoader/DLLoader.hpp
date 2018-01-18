@@ -14,7 +14,7 @@
 #include <vector>
 #include <memory>
 
-namespace Sex {
+namespace utils {
     class DLLoader {
 #ifdef WIN32
         std::vector<std::pair<std::string, HINSTANCE>> _dlHandles;
