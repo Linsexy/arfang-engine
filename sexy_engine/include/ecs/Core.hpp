@@ -20,6 +20,8 @@ namespace Sex {
             END_LOOP
         };
 
+        Event(Type type) : t(type) {}
+
         Type t;
     };
     class Core : public Module<Core, Event> {
@@ -36,8 +38,8 @@ namespace Sex {
                             "You should have a classname that rocks. Refer to Named class for details.");
 
             auto s = std::make_unique<ST>(mediator, args...);
-            _systems.emplace(utils::IndexType::get<ST>(), std::move(s));
             mediator->addSystem(s.get());
+            _systems.emplace(utils::IndexType::get<ST>(), std::move(s));
         }
 
         template <typename... Systems>
