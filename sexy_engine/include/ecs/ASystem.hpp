@@ -32,13 +32,13 @@ namespace Sex {
 
 
     public:
-        ASystem(Mediator *m = nullptr) : mediator(m)
+        ASystem(const std::shared_ptr<Mediator> &m = nullptr) : mediator(m)
         {}
         virtual void update() {};
 
         virtual ~ASystem() = default;
 
-        Mediator *getMediator() const {return mediator;}
+        Mediator *getMediator() const {return mediator.get();}
 
     protected:
         virtual void handler(const AbstractData& data) = 0;
@@ -53,7 +53,7 @@ namespace Sex {
         }
 
     protected:
-        Mediator *mediator;
+        std::shared_ptr<Mediator> mediator;
     };
 }
 #endif //PROJECT_ASYSTEM_HPP

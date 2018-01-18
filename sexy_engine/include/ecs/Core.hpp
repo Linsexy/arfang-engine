@@ -8,14 +8,24 @@
 /* Core class of the engine */
 #include <memory>
 #include "Mediator.hpp"
+#include "Module.hpp"
 
 namespace Sex {
-    class Core {
-    private:
-        std::unique_ptr<Mediator> mediator;
-    public:
+    struct Event
+    {
+        enum class Type
+        {
+            UNDEFINED,
+            END_LOOP
+        };
 
-        Core() : mediator(std::make_unique<Mediator>()) {}
+        Event(Type type) : t(type) {}
+
+        Type t;
+    };
+    class Core : public Module<Core, Event> {
+    public:
+        Core();
         ~Core() = default;
 
 
@@ -24,7 +34,7 @@ namespace Sex {
             static_assert(std::is_base_of<ASystem, ST>::value,
                           "addSystem function should be called with a type inheriting from ASystem");
 
-            auto s = std::make_shared<ST>(mediator.get(), args...);
+            auto s = std::make_shared<ST>(mediator, args...);
             _systems.emplace(utils::IndexType::get<ST>(), s);
             mediator->addSystem(s.get());
         }
@@ -43,12 +53,13 @@ namespace Sex {
             return (static_cast<ST&>(*ptr));
         }
 
-        Mediator *getMediator() const
-        {
-            return (mediator.get());
-        }
+        void go();
+
+        void handle(const Event&);
 
     private:
+        //std::unique_ptr<Mediator> mediator;
+        bool isOver;
         std::unordered_map<unsigned int, std::shared_ptr<ASystem>> _systems;
     };
 }
