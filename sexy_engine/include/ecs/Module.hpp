@@ -52,7 +52,6 @@ namespace Sex
             static_assert(std::is_base_of<GameObject, ET>::value,
                           "This function aims creating GameObjects, not your shit");
             auto ret = std::make_shared<ET>(args...);
-            std::cout << static_cast<const std::shared_ptr<GameObject> &>(ret)->getId() << std::endl;
             transmit(static_cast<const std::shared_ptr<GameObject> &>(ret));
             return (ret);
         }

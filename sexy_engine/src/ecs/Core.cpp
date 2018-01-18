@@ -15,7 +15,7 @@ void Sex::Core::go()
     try {
         //TODO : Abstraire la gestion du temps dans une classe qui retourne le temps écoulé et appelle la fonction.
         //TODO : Actuellement le temps ne permet pas de gérer sur des systèmes moins performants.
-        const auto frameTime = 1/60;
+        const auto frameTime = (1.0/60.0) * 1000.0;
         while (!isOver) {
             auto start = std::chrono::high_resolution_clock::now();
 
@@ -24,9 +24,10 @@ void Sex::Core::go()
             }
             auto now = std::chrono::high_resolution_clock::now();
             auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
-            //std::cout << elapsed << std::endl;
-            usleep((frameTime - elapsed) * 1000);
-            std::cout << "hello there" << std::endl;
+            //std::cout << (frameTime - elapsed) << std::endl;
+            auto sexy = (frameTime - elapsed) * 1000;
+            usleep(sexy > 0.0 ? sexy : 0);
+            //std::cout << sexy << std::endl;
         }
     }
     catch (const std::exception &e)
