@@ -7,15 +7,26 @@
 #include <experimental/filesystem>
 #include <ecs/Core.hpp>
 #include <DLLoader/DLErrors.hpp>
+#include <unistd.h>
+
 
 void Sex::Core::go()
 {
     try {
-
+        //TODO : Abstraire la gestion du temps dans une classe qui retourne le temps écoulé et appelle la fonction.
+        //TODO : Actuellement le temps ne permet pas de gérer sur des systèmes moins performants.
+        const auto frameTime = 1/60;
         while (!isOver) {
+            auto start = std::chrono::high_resolution_clock::now();
+
             for (auto &sys : _systems) {
                 sys.second->update();
             }
+            auto now = std::chrono::high_resolution_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
+            //std::cout << elapsed << std::endl;
+            usleep((frameTime - elapsed) / 1000);
+            std::cout << "hello there" << std::endl;
         }
     }
     catch (const std::exception &e)
