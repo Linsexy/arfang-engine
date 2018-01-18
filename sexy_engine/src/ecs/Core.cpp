@@ -25,7 +25,7 @@ void Sex::Core::go()
             auto now = std::chrono::high_resolution_clock::now();
             auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
             //std::cout << elapsed << std::endl;
-            usleep((frameTime - elapsed) / 1000);
+            usleep((frameTime - elapsed) * 1000);
             std::cout << "hello there" << std::endl;
         }
     }
