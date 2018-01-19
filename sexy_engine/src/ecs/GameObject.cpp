@@ -9,6 +9,11 @@ unsigned int Sex::GameObject::__id__ = 0;
 Sex::GameObject::GameObject()  : _id(++__id__)
 {}
 
+Sex::GameObject::GameObject(unsigned int id) : _id(id)
+{
+    ++__id__;
+}
+
 unsigned int Sex::GameObject::getId() const
 {
     return _id;

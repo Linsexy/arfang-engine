@@ -18,6 +18,7 @@ namespace Sex {
         static unsigned int __id__;
 
         GameObject(); /* GameObjects should only be created by the createObject function */
+        GameObject(unsigned int);
 
         ~GameObject() = default;
 
