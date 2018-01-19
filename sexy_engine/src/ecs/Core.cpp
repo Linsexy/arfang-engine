@@ -20,13 +20,13 @@ void Sex::Core::go()
             auto start = std::chrono::high_resolution_clock::now();
 
             for (auto &sys : _systems) {
-                sys.second->update();
+                auto now = std::chrono::high_resolution_clock::now();
+                auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
+                sys.second->update(elapsed);
             }
-            auto now = std::chrono::high_resolution_clock::now();
-            auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
             //std::cout << (frameTime - elapsed) << std::endl;
-            auto sexy = (frameTime - elapsed) * 1000;
-            usleep(sexy > 0.0 ? sexy : 0);
+            //auto sexy = (frameTime - elapsed) * 1000;
+            //usleep(sexy > 0.0 ? sexy : 0);
             //std::cout << sexy << std::endl;
         }
     }
