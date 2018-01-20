@@ -72,7 +72,7 @@ namespace Sex {
         unsigned int getId() const;
 
     private:
-        std::unordered_map<unsigned int, std::shared_ptr<IComponent>> _components;
+        std::unordered_map<utils::IndexType::meta, std::shared_ptr<IComponent>> _components;
         unsigned int _id;
     };
 }

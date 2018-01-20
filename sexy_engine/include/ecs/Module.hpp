@@ -12,6 +12,7 @@
 #include "utils/IndexType.hpp"
 #include "GameObject.hpp"
 #include "Mediator.hpp"
+#include "EntityFactory.hpp"
 
 namespace Sex
 {
@@ -56,6 +57,13 @@ namespace Sex
             return (ret);
         }
 
+        auto createObject(utils::IndexType::meta type) const
+        {
+            //si system -> creer un event. -> reponse par event
+            //Factory::getInstance<type>();
+            return (EntityFactory::create(type));
+        }
+
     protected:
         virtual void handler(const AbstractData& data) override
         {
@@ -68,7 +76,7 @@ namespace Sex
         }
 
     public:
-        std::vector<unsigned int> getTypes() const noexcept override {
+        std::vector<utils::IndexType::meta> getTypes() const noexcept override {
             return (utils::IndexType::getMany<Events...>());
         }
 

@@ -75,7 +75,7 @@ namespace Sex {
 
     private:
         bool isOver;
-        std::unordered_map<unsigned int, std::unique_ptr<ASystem>> _systems;
+        std::unordered_map<utils::IndexType::meta, std::unique_ptr<ASystem>> _systems;
 
         std::string entitiesDir;
         std::string systemsDir;

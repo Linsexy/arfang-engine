@@ -5,24 +5,25 @@
 #ifndef RTYPE_ENTITYFACTORY_HPP
 #define RTYPE_ENTITYFACTORY_HPP
 
-#include "Module.hpp"
+#include <unordered_map>
+#include <utils/IndexType.hpp>
+#include <ecs/GameObject.hpp>
 
-/*
 namespace Sex {
-    
-    class EntityFactory : public Module<EntityFactory>
+    class EntityFactory
     {
+        class MetaObject
+        {
+            utils::IndexType::meta type;
+            std::function<std::shared_ptr<GameObject>()> instantiate;
+        };
+
     public:
-        EntityFactory(Mediator *m) : Module<EntityFactory>(m)
-        {}
-        virtual ~EntityFactory() = default;
+        static std::shared_ptr<GameObject> create(utils::IndexType::meta);
 
     private:
-        template <typename ET>
-        void handle(const Args&... args)
-        {
-        };
+        std::unordered_map<utils::IndexType::meta, MetaObject> typeToHandler;
     };
 }
- */
+
 #endif //RTYPE_ENTITYFACTORY_HPP

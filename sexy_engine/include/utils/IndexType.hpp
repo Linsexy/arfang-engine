@@ -13,7 +13,9 @@
 
 namespace utils {
     struct IndexType {
-        static unsigned int _id;
+        using meta = unsigned int;
+
+        static meta _id;
 
         /* public for technical reasons, nobody should modify it */
 
@@ -26,7 +28,7 @@ namespace utils {
 
         template<typename... Args>
         static auto getMany() noexcept {
-            using expander = std::vector<unsigned int>;
+            using expander = std::vector<meta>;
             static const auto ret = expander{(get<Args>())...};
 
             return ret;
