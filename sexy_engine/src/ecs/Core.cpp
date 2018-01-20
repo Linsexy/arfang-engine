@@ -54,7 +54,8 @@ void Sex::Core::loadSystemsIn(const std::string &dirName)
             std::cout << p << std::endl;
             dlLoader.dlOpen(p.path().string());
             std::cout << "open with success" << std::endl;
-            auto s = dlLoader.loadDLL<ASystem>(p.path().string(), "entryPoint");
+            auto s = dlLoader.loadDLL<ASystem>(p.path().string(), "entryPoint",
+                                                mediator);
             mediator->addSystem(s.get());
             auto i = s->getIndexType();
             _systems.emplace(i, std::move(s));

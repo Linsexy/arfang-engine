@@ -30,11 +30,12 @@ namespace utils {
         void    dlCloseAll() noexcept;
         void    *dlSym(std::string const &, std::string const &) const;
 
-        template<typename T>
-        std::unique_ptr<T> loadDLL(std::string const &fileName, std::string const &sym)
+        template<typename T, typename... Args>
+        std::unique_ptr<T> loadDLL(std::string const &fileName, std::string const &sym,
+                                   const Args&... args)
         {
             void *func = this->dlSym(fileName, sym);
-            return (std::unique_ptr<T>((reinterpret_cast<T *(*)()>(func))()));
+            return (std::unique_ptr<T>((reinterpret_cast<T *(*)(Args...)>(func))(args...)));
         }
 
     };
