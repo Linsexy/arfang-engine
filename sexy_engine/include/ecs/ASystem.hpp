@@ -38,6 +38,8 @@ namespace Sex {
 
         virtual ~ASystem() = default;
 
+        virtual unsigned int getIndexType() const = 0;
+
         Mediator *getMediator() const {return mediator.get();}
 
     protected:

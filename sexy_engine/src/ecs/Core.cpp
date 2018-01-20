@@ -40,6 +40,11 @@ Sex::Core::Core()
         : Module<Core, Event>(std::make_shared<Mediator>(), "Core"), isOver(false)
 {}
 
+unsigned int Sex::Core::getIndexType() const
+{
+    return (utils::IndexType::get<Core>());
+}
+
 void Sex::Core::loadSystemsIn(const std::string &dirName)
 {
     for (auto &p : std::experimental::filesystem::directory_iterator(dirName)) {
@@ -49,7 +54,7 @@ void Sex::Core::loadSystemsIn(const std::string &dirName)
         }
         catch (const utils::DLErrors& e)
         {
-            std::cerr << e.what();
+            std::cerr << e.what() << std::endl;
         }
         std::cout << p << std::endl;
     }
