@@ -68,7 +68,7 @@ namespace Sex
         }
 
     public:
-        auto getTypes() const noexcept {
+        std::vector<unsigned int> getTypes() const noexcept override {
             return (utils::IndexType::getMany<Events...>());
         }
 

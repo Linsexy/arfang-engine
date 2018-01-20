@@ -17,7 +17,7 @@
 namespace utils {
     class DLLoader {
 #ifdef WIN32
-        std::vector<std::pair<std::string, HINSTANCE>> _dlHandles;
+            std::vector<std::pair<std::string, HINSTANCE>> _dlHandles;
 #else
         std::vector<std::pair<std::string, void *>>     _dlHandles;
 #endif

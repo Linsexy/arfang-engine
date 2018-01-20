@@ -71,7 +71,7 @@ namespace Sex {
         void setEntityDir(const std::string &);
         void setSystemDir(const std::string &);
 
-        unsigned int getIndexType() const override ;
+        unsigned int getIndexType() const noexcept override ;
 
     private:
         bool isOver;

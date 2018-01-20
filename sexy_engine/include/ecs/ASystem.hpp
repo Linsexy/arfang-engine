@@ -34,13 +34,15 @@ namespace Sex {
     public:
         ASystem(const std::shared_ptr<Mediator> &m = nullptr) : mediator(m)
         {}
-        virtual void update(long) {};
+        virtual void update(long) noexcept {};
 
         virtual ~ASystem() = default;
 
-        virtual unsigned int getIndexType() const = 0;
+        virtual unsigned int getIndexType() const noexcept = 0;
 
-        Mediator *getMediator() const {return mediator.get();}
+        virtual std::vector<unsigned int> getTypes() const noexcept = 0;
+
+        Mediator *getMediator() const noexcept {return mediator.get();}
 
     protected:
         virtual void handler(const AbstractData& data) = 0;

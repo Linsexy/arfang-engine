@@ -10,6 +10,7 @@
 #include <iostream>
 #include <vector>
 
+
 namespace utils {
     struct IndexType {
         static unsigned int _id;
