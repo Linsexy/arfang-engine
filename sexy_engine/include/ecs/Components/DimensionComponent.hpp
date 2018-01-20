@@ -7,12 +7,13 @@
 
 #include "ecs/Components/IComponent.hpp"
 
-struct DimensionComponent : public IComponent
-{
-    DimensionComponent(unsigned int w, unsigned int h) : width(w), height(h) {};
+namespace Sex {
+    struct DimensionComponent : public IComponent {
+        DimensionComponent(unsigned int w, unsigned int h) : width(w), height(h) {};
 
-    unsigned int width;
-    unsigned int height;
-};
+        unsigned int width;
+        unsigned int height;
+    };
+}
 
 #endif //RTYPE_DIMENSION_HPP

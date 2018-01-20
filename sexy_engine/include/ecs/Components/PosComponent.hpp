@@ -7,12 +7,13 @@
 
 #include "ecs/Components/IComponent.hpp"
 
-struct PosComponent : public IComponent
-{
-    PosComponent(int xx, int yy) : x(xx), y(yy) {}
+namespace Sex {
+    struct PosComponent : public IComponent {
+        PosComponent(int xx, int yy) : x(xx), y(yy) {}
 
-    int x;
-    int y;
-};
+        int x;
+        int y;
+    };
+}
 
 #endif //ECS_POSCOMPONENT_HPP

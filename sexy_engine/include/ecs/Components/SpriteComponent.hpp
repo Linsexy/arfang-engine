@@ -7,24 +7,24 @@
 #include "ecs/Components/DimensionComponent.hpp"
 #include <Tools.hpp>
 
-namespace Graphical
+namespace Sex
 {
 	struct SpriteComponent : public IComponent
 	{
 		struct SpriteData
 		{
-			std::string	    			image;
-			Sex::Vector2D				size;
-			Sex::Vector2D				displaySize;
-			unsigned int	    	    depth;
+			std::string				image;
+			Sex::Vector2D			size;
+			Sex::Vector2D			displaySize;
+			int 					depth;
 		};
 		SpriteData				    	sprite;
 
 		struct AnimationData
 		{
-			unsigned int			    length;
-			unsigned int		    	number;
-			unsigned int			    frame;
+			unsigned int			length;
+			unsigned int			number;
+			unsigned int			frame;
 		};
 		AnimationData				animation;
 
