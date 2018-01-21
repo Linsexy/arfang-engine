@@ -7,6 +7,7 @@
 #include <experimental/filesystem>
 #include <ecs/Core.hpp>
 #include <DLLoader/DLErrors.hpp>
+#include <ecs/EntityManager..hpp>
 
 
 void Sex::Core::go()
@@ -39,6 +40,7 @@ Sex::Core::Core()
         : Module<Core, Event>(std::make_shared<Mediator>(), "Core"), isOver(false)
 {
     mediator->addSystem(this);
+    emplaceSystem<EntityManager>(dlLoader);
 }
 
 unsigned int Sex::Core::getIndexType() const noexcept

@@ -12,7 +12,7 @@ namespace Sex {
     class EntityManager : public Module<EntityManager,
                                         EntityFactory::Query> {
     public:
-        EntityManager(const utils::DLLoader &);
+        EntityManager(const std::shared_ptr<Mediator>&, utils::DLLoader &);
 
         void handle(const EntityFactory::Query &);
 

@@ -66,6 +66,11 @@ namespace Sex
             return (ret);
         }
 
+        utils::IndexType::meta getIndexType() const noexcept override
+        {
+            return (utils::IndexType::get<CRTP>());
+        }
+
     protected:
         virtual void handler(const AbstractData& data) override
         {

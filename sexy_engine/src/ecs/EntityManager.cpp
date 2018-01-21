@@ -5,6 +5,10 @@
 #include <experimental/filesystem>
 #include <ecs/EntityManager..hpp>
 
+Sex::EntityManager::EntityManager(const std::shared_ptr<Mediator> &m, utils::DLLoader & d)
+        : Module<EntityManager, EntityFactory::Query>(m), dlLoader(d)
+{}
+
 void Sex::EntityManager::handle(const EntityFactory::Query &query)
 {
     std::vector<utils::IndexType::meta> types(query.paths.size());

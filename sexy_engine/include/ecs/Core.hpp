@@ -31,7 +31,7 @@ namespace Sex {
 
 
         template<typename ST, typename... Args>
-        void emplaceSystem(const Args &... args) {
+        void emplaceSystem(Args &... args) {
             static_assert(std::is_base_of<ASystem, ST>::value,
                           "addSystem function should be called with a type inheriting from ASystem");
             static_assert(utils::is_named<ST>::value,
