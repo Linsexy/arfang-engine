@@ -27,8 +27,11 @@ namespace Sex
 			unsigned int			frame;
 		};
 		AnimationData				animation;
+		Vector2D        			offset;
+
 
 		SpriteComponent() = delete;
-		SpriteComponent(SpriteData const &newSprite, AnimationData const &newAnimation) : sprite(newSprite), animation(newAnimation) {}
+		SpriteComponent(SpriteData const &newSprite, AnimationData const &newAnimation, Vector2D const &newoffset) :
+				sprite(newSprite), animation(newAnimation), offset(newoffset) {}
 	};
 }

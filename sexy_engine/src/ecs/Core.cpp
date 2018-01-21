@@ -9,7 +9,6 @@
 #include <DLLoader/DLErrors.hpp>
 #include <ecs/EntityManager..hpp>
 
-
 void Sex::Core::go()
 {
     try {
@@ -50,12 +49,14 @@ unsigned int Sex::Core::getIndexType() const noexcept
 
 void Sex::Core::loadSystemsIn(const std::string &dirName)
 {
-    for (auto &p : std::experimental::filesystem::directory_iterator(dirName)) {
-        try {
+	std::cout << "Opening the dir " <<  (std::string(ROOT_DIR) + "/" + dirName) << std::endl;
+	for (auto &p : std::experimental::filesystem::directory_iterator(std::string(ROOT_DIR) + "/" + dirName)) {
+		std::cout << "Try to open " << p << " with success" << std::endl;
+		try {
             std::cout << p << std::endl;
-            dlLoader.dlOpen(p.path().string());
-            std::cout << "open with success" << std::endl;
-            auto s = dlLoader.loadDLL<ASystem>(p.path().string(), "entryPoint",
+			dlLoader.dlOpen(p.path().string());
+			std::cout << "open with success" << std::endl;
+			auto s = dlLoader.loadDLL<ASystem>(p.path().string(), "entryPoint",
                                                 mediator);
             mediator->addSystem(s.get());
             auto i = s->getIndexType();
@@ -74,6 +75,6 @@ void Sex::Core::setSystemDir(const std::string &s) {systemsDir = s;}
 
 void Sex::Core::handle(const Event &e)
 {
-    if (e.t == Event::Type::END_LOOP)
-        isOver = true;
+	if (e.t == Event::Type::END_LOOP)
+		isOver = true;
 }
