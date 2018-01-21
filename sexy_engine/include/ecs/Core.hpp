@@ -7,6 +7,7 @@
 
 /* Core class of the engine */
 #include <memory>
+#include <DLLoader/DLLoader.hpp>
 #include "Mediator.hpp"
 #include "Module.hpp"
 
@@ -19,11 +20,13 @@ namespace Sex {
             END_LOOP
         };
 
+        Event(Type type) : t(type) {}
+
         Type t;
     };
     class Core : public Module<Core, Event> {
     public:
-        Core();
+        Core(/*const std::string& entityDir, const std::string &systemDir*/);
         ~Core() = default;
 
 
@@ -31,10 +34,18 @@ namespace Sex {
         void emplaceSystem(Args &... args) {
             static_assert(std::is_base_of<ASystem, ST>::value,
                           "addSystem function should be called with a type inheriting from ASystem");
+            static_assert(utils::is_named<ST>::value,
+                            "You should have a classname that rocks. Refer to Named class for details.");
 
-            auto s = std::make_shared<ST>(mediator, args...);
-            _systems.emplace(utils::IndexType::get<ST>(), s);
+            auto s = std::make_unique<ST>(mediator, args...);
             mediator->addSystem(s.get());
+            _systems.emplace(utils::IndexType::get<ST>(), std::move(s));
+        }
+
+        template <typename... Systems>
+        void loadSystems()
+        {
+            (emplaceSystem<Systems>(),...);
         }
 
         template <typename ST>
@@ -51,14 +62,24 @@ namespace Sex {
             return (static_cast<ST&>(*ptr));
         }
 
+        void loadSystemsIn(const std::string &dirName);
+
         void go();
 
         void handle(const Event&);
 
+        void setEntityDir(const std::string &);
+        void setSystemDir(const std::string &);
+
+        unsigned int getIndexType() const noexcept override ;
+
     private:
-        //std::unique_ptr<Mediator> mediator;
         bool isOver;
-        std::unordered_map<unsigned int, std::shared_ptr<ASystem>> _systems;
+        std::unordered_map<utils::IndexType::meta, std::unique_ptr<ASystem>> _systems;
+
+        std::string entitiesDir;
+        std::string systemsDir;
+        utils::DLLoader dlLoader;
     };
 }
 

@@ -14,10 +14,10 @@
 #include <vector>
 #include <memory>
 
-namespace Sex {
+namespace utils {
     class DLLoader {
 #ifdef WIN32
-        std::vector<std::pair<std::string, HINSTANCE>> _dlHandles;
+            std::vector<std::pair<std::string, HINSTANCE>> _dlHandles;
 #else
         std::vector<std::pair<std::string, void *>>     _dlHandles;
 #endif
@@ -30,11 +30,12 @@ namespace Sex {
         void    dlCloseAll() noexcept;
         void    *dlSym(std::string const &, std::string const &) const;
 
-        template<typename T>
-        std::unique_ptr<T> loadDLL(std::string const &fileName, std::string const &sym)
+        template<typename T, typename... Args>
+        std::unique_ptr<T> loadDLL(std::string const &fileName, std::string const &sym,
+                                   const Args&... args)
         {
             void *func = this->dlSym(fileName, sym);
-            return (std::unique_ptr<T>((reinterpret_cast<T *(*)()>(func))()));
+            return (std::unique_ptr<T>((reinterpret_cast<T *(*)(Args...)>(func))(args...)));
         }
 
     };

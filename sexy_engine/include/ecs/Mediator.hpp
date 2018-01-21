@@ -18,6 +18,7 @@ namespace Sex {
         Mediator() = default;
         ~Mediator() = default;
 
+        /* TODO: note : c'est peut etre de la grosse merde que ST soit le type réel, faire attention. */
         template<typename ST, typename T>
         void transmit(const ST *sender, const T &transmit) {
              auto id = utils::IndexType::get<T>();
@@ -26,7 +27,6 @@ namespace Sex {
                 {
                     std::cout << x << std::endl;
                 }*/
-                std::cout << std::endl;
                 if (sys.first != sender && std::find(sys.second.begin(), sys.second.end(), id) != sys.second.end()) {
                     //std::cout << "Jean Michel !" << std::endl;
                     sys.first->receive(transmit);
@@ -41,7 +41,7 @@ namespace Sex {
         }
 
     private:
-        std::unordered_map<ASystem *, std::vector<unsigned int>> _systems;
+        std::unordered_map<ASystem *, std::vector<utils::IndexType::meta>> _systems;
     };
 }
 

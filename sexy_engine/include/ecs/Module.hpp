@@ -6,23 +6,26 @@
 #define RTYPE_MODULE_HPP
 
 #include <unordered_map>
+#include <utils/Named.hpp>
 #include "ecs/ASystem.hpp"
 #include "ecs/Mediator.hpp"
 #include "utils/IndexType.hpp"
 #include "GameObject.hpp"
 #include "Mediator.hpp"
+#include "EntityFactory.hpp"
 
 namespace Sex
 {
 
     /* If A inherits from Module, CRTP must be A */
     template<typename CRTP, typename... Events>
-    class Module : public ASystem
+    class Module : public ASystem, public utils::Named<CRTP>
     {
     public:
 
         template <typename Med>
-        Module(const std::shared_ptr<Med> &m = nullptr) : ASystem(m)
+        Module(const std::shared_ptr<Med> &m = nullptr, const std::string &className="NoClassName")
+                : ASystem(m), utils::Named<CRTP>(className)
         {
             static_assert(std::is_base_of<Module, CRTP>::value,
             "If a System X inherits from Module, it must template it on itself (class X : public Module<X>)");
@@ -50,8 +53,22 @@ namespace Sex
             static_assert(std::is_base_of<GameObject, ET>::value,
                           "This function aims creating GameObjects, not your shit");
             auto ret = std::make_shared<ET>(args...);
-            transmit(ret);
+            transmit(static_cast<const std::shared_ptr<GameObject> &>(ret));
             return (ret);
+        }
+
+        auto createObject(utils::IndexType::meta type) const
+        {
+            //si system -> creer un event. -> reponse par event
+            //Factory::getInstance<type>();
+            auto ret = EntityFactory::create(type);
+            transmit(static_cast<const std::shared_ptr<GameObject> &>(ret));
+            return (ret);
+        }
+
+        utils::IndexType::meta getIndexType() const noexcept override
+        {
+            return (utils::IndexType::get<CRTP>());
         }
 
     protected:
@@ -66,7 +83,7 @@ namespace Sex
         }
 
     public:
-        auto getTypes() const noexcept {
+        std::vector<utils::IndexType::meta> getTypes() const noexcept override {
             return (utils::IndexType::getMany<Events...>());
         }
 
@@ -78,7 +95,7 @@ namespace Sex
         }
 
     private:
-        std::unordered_map<unsigned int,
+        std::unordered_map<utils::IndexType::meta,
     						std::function <void(const AbstractData&)> > _fptr;
     };
 }

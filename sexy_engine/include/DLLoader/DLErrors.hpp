@@ -8,7 +8,7 @@
 #include <exception>
 #include <string>
 
-namespace Sex
+namespace utils
 {
     class DLErrors : public std::exception
     {

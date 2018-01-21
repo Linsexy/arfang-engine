@@ -1,7 +1,15 @@
 build/
+entities/
+systems/
 cmake-build-debug/
 .idea/
 VsBuild/
 Debug/
 Release/
 .vs/
+rtype_main
+rtype_client
+rtype_server
+lib/boost_1_66_0/
+lib/boost_64/
+lib/Qt/

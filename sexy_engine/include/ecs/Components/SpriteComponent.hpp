@@ -2,22 +2,23 @@
 
 #include <string>
 
-#include "Graphical/Tools.hpp"
 #include "ecs/Components/IComponent.hpp"
 #include "ecs/Components/PosComponent.hpp"
 #include "ecs/Components/DimensionComponent.hpp"
+#include <Tools.hpp>
 
-namespace Graphical
+namespace Sex
 {
 	struct SpriteComponent : public IComponent
 	{
 		struct SpriteData
 		{
 			std::string				image;
-			Vector2D				size;
-			Vector2D				displaySize;
+			Sex::Vector2D			size;
+			Sex::Vector2D			displaySize;
+			int 					depth;
 		};
-		SpriteData					sprite;
+		SpriteData				    	sprite;
 
 		struct AnimationData
 		{
@@ -26,8 +27,11 @@ namespace Graphical
 			unsigned int			frame;
 		};
 		AnimationData				animation;
+		Vector2D        			offset;
+
 
 		SpriteComponent() = delete;
-		SpriteComponent(SpriteData const &newSprite, AnimationData const &newAnimation) : sprite(newSprite), animation(newAnimation) {}
+		SpriteComponent(SpriteData const &newSprite, AnimationData const &newAnimation, Vector2D const &newoffset) :
+				sprite(newSprite), animation(newAnimation), offset(newoffset) {}
 	};
 }

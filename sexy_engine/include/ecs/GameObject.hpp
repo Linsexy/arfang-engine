@@ -7,6 +7,7 @@
 
 #include <unordered_map>
 #include <memory>
+#include <functional>
 #include "ecs/Components/IComponent.hpp"
 #include "utils/IndexType.hpp"
 
@@ -15,9 +16,18 @@
 namespace Sex {
     class GameObject {
     public:
+
+        struct Loader
+        {
+            std::function<std::shared_ptr<GameObject>()> load;
+            utils::IndexType::meta                       type;
+        };
+
+
         static unsigned int __id__;
 
         GameObject(); /* GameObjects should only be created by the createObject function */
+        GameObject(unsigned int);
 
         ~GameObject() = default;
 
@@ -71,7 +81,7 @@ namespace Sex {
         unsigned int getId() const;
 
     private:
-        std::unordered_map<unsigned int, std::shared_ptr<IComponent>> _components;
+        std::unordered_map<utils::IndexType::meta, std::shared_ptr<IComponent>> _components;
         unsigned int _id;
     };
 }
