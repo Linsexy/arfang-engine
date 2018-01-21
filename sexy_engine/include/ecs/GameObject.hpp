@@ -7,6 +7,7 @@
 
 #include <unordered_map>
 #include <memory>
+#include <functional>
 #include "ecs/Components/IComponent.hpp"
 #include "utils/IndexType.hpp"
 
@@ -15,6 +16,14 @@
 namespace Sex {
     class GameObject {
     public:
+
+        struct Loader
+        {
+            std::function<std::shared_ptr<GameObject>()> load;
+            utils::IndexType::meta                       type;
+        };
+
+
         static unsigned int __id__;
 
         GameObject(); /* GameObjects should only be created by the createObject function */

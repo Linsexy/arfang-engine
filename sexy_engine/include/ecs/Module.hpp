@@ -61,7 +61,9 @@ namespace Sex
         {
             //si system -> creer un event. -> reponse par event
             //Factory::getInstance<type>();
-            return (EntityFactory::create(type));
+            auto ret = EntityFactory::create(type);
+            transmit(static_cast<const std::shared_ptr<GameObject> &>(ret));
+            return (ret);
         }
 
     protected:
@@ -88,7 +90,7 @@ namespace Sex
         }
 
     private:
-        std::unordered_map<unsigned int,
+        std::unordered_map<utils::IndexType::meta,
     						std::function <void(const AbstractData&)> > _fptr;
     };
 }
