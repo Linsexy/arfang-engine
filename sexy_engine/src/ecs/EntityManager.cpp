@@ -11,8 +11,8 @@ Sex::EntityManager::EntityManager(const std::shared_ptr<Mediator> &m, utils::DLL
 
 void Sex::EntityManager::handle(const EntityFactory::Query &query)
 {
-    std::vector<utils::IndexType::meta> types(query.paths.size());
-    std::cout << "NICROMITAFTNISHOVITMOKAI  " << query.paths.size() << std::endl;
+    std::vector<utils::IndexType::meta> types;
+    types.reserve(query.paths.size());
     for (const auto& p : query.paths)
     {
         for (auto &p : std::experimental::filesystem::directory_iterator(p))
@@ -20,10 +20,9 @@ void Sex::EntityManager::handle(const EntityFactory::Query &query)
             try {
 
                 dlLoader.dlOpen(p.path().string());
-                std::cout << "open with success" << std::endl;
+                std::cout << "just opened with success " << p.path().string() << std::endl;
                 auto loader = (dlLoader.loadDLL<GameObject::Loader>(p.path().string(), "entryPoint"));
-                types.push_back(loader->type);
-                EntityFactory::addMeta(loader);
+                types.push_back(EntityFactory::addMeta(loader));
                 std::cout << "nimoftai" << std::endl;
             }
             catch (const std::exception& e)
@@ -32,5 +31,6 @@ void Sex::EntityManager::handle(const EntityFactory::Query &query)
             }
         }
     }
-    transmit(EntityFactory::Response(std::move(types)));
+    std::cout << "NIKAL " << types.size() << std::endl;
+    transmit(EntityFactory::Response(std::move(types), query.paths.front()));
 }

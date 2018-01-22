@@ -63,6 +63,7 @@ namespace Sex {
         }
 
         void loadSystemsIn(const std::string &dirName);
+        void loadEntitiesIn(const std::string &dirName);
 
         void go();
 

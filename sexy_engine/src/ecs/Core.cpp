@@ -49,7 +49,7 @@ unsigned int Sex::Core::getIndexType() const noexcept
 
 void Sex::Core::loadSystemsIn(const std::string &dirName)
 {
-	std::cout << "Opening the dir " <<  (std::string("ROOT_DIR") + "/" + dirName) << std::endl;
+	std::cout << "Opening the dir " <<  (std::string(ROOT_DIR) + "/" + dirName) << std::endl;
 	for (auto &p : std::experimental::filesystem::directory_iterator(std::string("ROOT_DIR") + "/" + dirName)) {
 		std::cout << "Try to open " << p << " with success" << std::endl;
 		try {
@@ -67,6 +67,13 @@ void Sex::Core::loadSystemsIn(const std::string &dirName)
             std::cerr << e.what() << std::endl;
         }
     }
+}
+
+void Sex::Core::loadEntitiesIn(const std::string &dirName)
+{
+    EntityFactory::Query   query;
+    query.paths = { dirName };
+    this->transmit(query);
 }
 
 void Sex::Core::setEntityDir(const std::string &s) {entitiesDir = s;}
