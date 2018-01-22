@@ -13,7 +13,6 @@
 namespace Sex {
     class EntityFactory
     {
-        using meta = unsigned int;
         using creator = std::function<std::shared_ptr<GameObject>()>;
 
         struct MetaObject
@@ -37,12 +36,10 @@ namespace Sex {
         };
 
         static std::shared_ptr<GameObject> create(utils::IndexType::meta);
-        static meta addMeta(const std::unique_ptr<GameObject::Loader>&) noexcept ;
+        static void addMeta(const std::unique_ptr<GameObject::Loader>&) noexcept ;
 
     private:
        static std::unordered_map<utils::IndexType::meta, MetaObject> typeToHandler;
-    public:
-        static meta __inc;
     };
 }
 

@@ -22,8 +22,9 @@ void Sex::EntityManager::handle(const EntityFactory::Query &query)
                 dlLoader.dlOpen(p.path().string());
                 std::cout << "just opened with success " << p.path().string() << std::endl;
                 auto loader = (dlLoader.loadDLL<GameObject::Loader>(p.path().string(), "entryPoint"));
-                types.push_back(EntityFactory::addMeta(loader));
-                std::cout << "nimoftai" << std::endl;
+                types.push_back(loader->type);
+                EntityFactory::addMeta(loader);
+                std::cout << "nimoftai " << loader->type << std::endl;
             }
             catch (const std::exception& e)
             {
