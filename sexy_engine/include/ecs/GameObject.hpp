@@ -74,7 +74,8 @@ namespace Sex {
             return (_components.find(utils::IndexType::get<CT>()) != _components.end());
         }
 
-        void setId(unsigned int);
+        void setId(unsigned int) noexcept ;
+        unsigned int getId() const noexcept ;
 
         template<typename CT>
         void detachComponent() {
@@ -85,7 +86,6 @@ namespace Sex {
             _components.erase(it);
         }
 
-        unsigned int getId() const;
 
     private:
         std::unordered_map<utils::IndexType::meta, std::shared_ptr<IComponent>> _components;
