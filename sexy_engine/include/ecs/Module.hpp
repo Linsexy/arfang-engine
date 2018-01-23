@@ -66,8 +66,13 @@ namespace Sex
 
         auto createObject(utils::IndexType::meta type) const
         {
-            //si system -> creer un event. -> reponse par event
-            //Factory::getInstance<type>();
+            auto ret = EntityFactory::create(type);
+            transmit(static_cast<const std::shared_ptr<GameObject> &>(ret));
+            return (ret);
+        }
+
+        auto createObject(utils::IndexType::meta type, unsigned int id) const
+        {
             auto ret = EntityFactory::create(type);
             transmit(static_cast<const std::shared_ptr<GameObject> &>(ret));
             return (ret);

@@ -74,6 +74,8 @@ namespace Sex {
             return (_components.find(utils::IndexType::get<CT>()) != _components.end());
         }
 
+        void setId(unsigned int);
+
         template<typename CT>
         void detachComponent() {
             auto it = _components.find(utils::IndexType::get<CT>());

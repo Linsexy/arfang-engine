@@ -11,6 +11,13 @@ std::shared_ptr<Sex::GameObject> Sex::EntityFactory::create(utils::IndexType::me
     return (typeToHandler.at(m).instantiate());
 }
 
+std::shared_ptr<Sex::GameObject> Sex::EntityFactory::create(utils::IndexType::meta m, unsigned int id)
+{
+    auto ret = typeToHandler.at(m).instantiate();
+    ret->setId(id);
+    return (ret);
+}
+
 void Sex::EntityFactory::addMeta(const std::unique_ptr<GameObject::Loader> &loader) noexcept
 {
     typeToHandler.emplace(loader->type, MetaObject(loader->load));

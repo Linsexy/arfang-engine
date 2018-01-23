@@ -18,3 +18,8 @@ unsigned int Sex::GameObject::getId() const
 {
     return _id;
 }
+
+void Sex::GameObject::setId(unsigned int id)
+{
+    _id = id;
+}

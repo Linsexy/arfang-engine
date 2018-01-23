@@ -36,6 +36,7 @@ namespace Sex {
         };
 
         static std::shared_ptr<GameObject> create(utils::IndexType::meta);
+        static std::shared_ptr<GameObject> create(utils::IndexType::meta, unsigned int);
         static void addMeta(const std::unique_ptr<GameObject::Loader>&) noexcept ;
 
     private:
