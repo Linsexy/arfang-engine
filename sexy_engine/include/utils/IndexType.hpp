@@ -9,19 +9,20 @@
 #include <utility>
 #include <iostream>
 #include <vector>
-
+#include <typeindex>
 
 namespace utils {
     struct IndexType {
-        using meta = unsigned int;
+        using meta = decltype(std::type_index(typeid(int)).hash_code());
 
-        static meta _id;
+        //static meta _id;
 
         /* public for technical reasons, nobody should modify it */
 
         template<typename T>
         static auto get() noexcept {
-            static const auto r_id = ++_id;
+            //static const auto r_id = ++_id;
+            static const auto r_id = std::type_index(typeid(T)).hash_code();
 
             return r_id;
         }

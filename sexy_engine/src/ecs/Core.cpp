@@ -45,10 +45,10 @@ Sex::Core::Core()
     mediator->addSystem(this);
 }
 
-unsigned int Sex::Core::getIndexType() const noexcept
+/*unsigned int Sex::Core::getIndexType() const noexcept
 {
     return (utils::IndexType::get<Core>());
-}
+}*/
 
 void Sex::Core::loadSystemsIn(const std::string &dirName)
 {

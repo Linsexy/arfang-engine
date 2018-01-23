@@ -8,7 +8,6 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${rtype_SOURCE_DIR}")
 
 FILE(GLOB SRC_SEXY
         src/ecs/*.cpp
-        src/ecs/Component/*.cpp
         src/utils/*.cpp
         src/DLLoader/*.cpp
         )
@@ -16,7 +15,6 @@ FILE(GLOB SRC_SEXY
 FILE(GLOB INC_SEXY
         include/*.hpp
         include/ecs/*.hpp
-        include/ecs/Components/*.hpp
         include/utils/*.hpp
         include/DLLoader/*.hpp
         )
