@@ -1,4 +1,6 @@
 build/
+entities/
+systems/
 cmake-build-debug/
 .idea/
 VsBuild/
@@ -11,3 +13,4 @@ rtype_server
 lib/boost_1_66_0/
 lib/boost_64/
 lib/Qt/
+libsexy_engine.so

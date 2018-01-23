@@ -25,13 +25,14 @@ namespace Sex {
     public:
         struct Query
         {
-            const std::vector<std::string> paths;
+            std::vector<std::string> paths;
         };
 
         struct Response
         {
-            Response(std::vector<utils::IndexType::meta>&&);
+            Response(std::vector<utils::IndexType::meta>&&, const std::string&);
             std::vector<utils::IndexType::meta> types;
+            std::string path;
         };
 
         static std::shared_ptr<GameObject> create(utils::IndexType::meta);

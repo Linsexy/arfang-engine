@@ -16,6 +16,11 @@
 namespace Sex {
     class GameObject {
     public:
+		struct DeleteEvent
+		{
+			std::shared_ptr<GameObject> const &objectToDestroy;
+			DeleteEvent(std::shared_ptr<GameObject> const &obj) : objectToDestroy(obj) {}
+		};
 
         struct Loader
         {

@@ -63,13 +63,16 @@ namespace Sex {
         }
 
         void loadSystemsIn(const std::string &dirName);
+        void loadEntitiesIn(const std::string &dirName);
 
         void go();
-
+        utils::DLLoader& getDLLoader();
         void handle(const Event&);
 
         void setEntityDir(const std::string &);
         void setSystemDir(const std::string &);
+
+
 
         unsigned int getIndexType() const noexcept override ;
 

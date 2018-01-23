@@ -16,5 +16,5 @@ void Sex::EntityFactory::addMeta(const std::unique_ptr<GameObject::Loader> &load
     typeToHandler.emplace(loader->type, MetaObject(loader->load));
 }
 
-Sex::EntityFactory::Response::Response(std::vector<utils::IndexType::meta> &&v) : types(v)
+Sex::EntityFactory::Response::Response(std::vector<utils::IndexType::meta> &&v, const std::string &s) : types(v), path(s)
 {}

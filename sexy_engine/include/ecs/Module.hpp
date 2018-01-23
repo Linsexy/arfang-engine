@@ -57,6 +57,13 @@ namespace Sex
             return (ret);
         }
 
+		void destroyObject(std::shared_ptr<GameObject> &objectToDestroy) const
+        {
+			GameObject::DeleteEvent const deleteEvent = GameObject::DeleteEvent(objectToDestroy);
+			transmit(deleteEvent);
+			objectToDestroy.reset();
+		}
+
         auto createObject(utils::IndexType::meta type) const
         {
             //si system -> creer un event. -> reponse par event
