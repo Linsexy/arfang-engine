@@ -7,10 +7,11 @@
 #include <experimental/filesystem>
 #include <ecs/Core.hpp>
 #include <DLLoader/DLErrors.hpp>
+#include "../../../common/include/GameObject/Player.hpp"
 
 void Sex::Core::go()
 {
-    std::cout << this->_systems.size() << std::endl;
+    createObject<Sex::Player>(3);
     try {
         //TODO : Abstraire la gestion du temps dans une classe qui retourne le temps écoulé et appelle la fonction.
         //TODO : Actuellement le temps ne permet pas de gérer sur des systèmes moins performants.
@@ -19,7 +20,6 @@ void Sex::Core::go()
             auto start = std::chrono::high_resolution_clock::now();
 
             for (auto &sys : _systems) {
-                std::cout << "coucou" << std::endl;
                 auto now = std::chrono::high_resolution_clock::now();
                 auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
                 sys.second->update(elapsed);
