@@ -11,8 +11,8 @@ namespace Sex {
     struct PosComponent : public IComponent {
         PosComponent(int xx, int yy) : x(xx), y(yy) {}
 
-        int x;
-        int y;
+        unsigned int x;
+        unsigned int y;
     };
 }
 

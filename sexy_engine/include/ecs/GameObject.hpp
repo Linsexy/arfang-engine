@@ -37,7 +37,7 @@ namespace Sex {
         ~GameObject() = default;
 
         template<typename CT, typename... Args>
-        bool emplaceComponent(Args const &... args) noexcept {
+        bool emplaceComponent(Args&&... args) noexcept {
             static_assert(std::is_base_of<IComponent, CT>::value,
                           "You have to attach components, not ponies.");
 
