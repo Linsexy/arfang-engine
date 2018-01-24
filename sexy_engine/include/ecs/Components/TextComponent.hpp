@@ -6,19 +6,23 @@
 #define RTYPE_TEXTCOMPONENT_HPP
 
 #include <string>
+#include "Tools.hpp"
 #include <ecs/Components/IComponent.hpp>
 
 namespace Sex
 {
     struct TextComponent : public IComponent
     {
-        std::string     _text;
-        std::string     _police;
-        unsigned int    _size;
+        std::string     text;
+        std::string     police;
+        unsigned int    size;
+        Vector2D        offset;
+        Color           color;
 
         TextComponent() = delete;
-        TextComponent(std::string const &text, std::string const &police, unsigned int size): _text(text), _size(size),
-        _police(police) {}
+        TextComponent(std::string const &text, std::string const &police, unsigned int size,
+                      Vector2D const &newoffset, Color const &color):
+                text(text),  police(police), size(size), offset(newoffset), color(color) {}
     };
 }
 

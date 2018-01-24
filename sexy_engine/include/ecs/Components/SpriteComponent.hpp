@@ -3,8 +3,6 @@
 #include <string>
 
 #include "ecs/Components/IComponent.hpp"
-#include "ecs/Components/PosComponent.hpp"
-#include "ecs/Components/DimensionComponent.hpp"
 #include <Tools.hpp>
 
 namespace Sex
@@ -15,7 +13,6 @@ namespace Sex
 		{
 			std::string				image;
 			Sex::Vector2D			size;
-			Sex::Vector2D			displaySize;
 			int 					depth;
 		};
 		SpriteData				    	sprite;
@@ -27,8 +24,19 @@ namespace Sex
 			unsigned int			frame;
 		};
 		AnimationData				animation;
+		Vector2D        			offset;
+
+		enum Direction
+		{
+			EAST,
+			WEST,
+            DEFAULT
+		};
+
+		Direction 				direction;
 
 		SpriteComponent() = delete;
-		SpriteComponent(SpriteData const &newSprite, AnimationData const &newAnimation) : sprite(newSprite), animation(newAnimation) {}
+		SpriteComponent(SpriteData const &newSprite, AnimationData const &newAnimation, Vector2D const &newoffset, Direction direction) :
+				sprite(newSprite), animation(newAnimation), offset(newoffset), direction(direction){};
 	};
 }

@@ -4,4 +4,4 @@
 
 #include <utils/IndexType.hpp>
 
-unsigned int utils::IndexType::_id = 0;
+//unsigned int utils::IndexType::_id = 0;

@@ -31,7 +31,7 @@ namespace Sex {
 
 
         template<typename ST, typename... Args>
-        void emplaceSystem(const Args &... args) {
+        void emplaceSystem(Args &... args) {
             static_assert(std::is_base_of<ASystem, ST>::value,
                           "addSystem function should be called with a type inheriting from ASystem");
             static_assert(utils::is_named<ST>::value,
@@ -63,19 +63,18 @@ namespace Sex {
         }
 
         void loadSystemsIn(const std::string &dirName);
+        void loadEntitiesIn(const std::string &dirName);
 
         void go();
-
+        utils::DLLoader& getDLLoader();
         void handle(const Event&);
 
         void setEntityDir(const std::string &);
         void setSystemDir(const std::string &);
 
-        unsigned int getIndexType() const noexcept override ;
-
     private:
         bool isOver;
-        std::unordered_map<unsigned int, std::unique_ptr<ASystem>> _systems;
+        std::unordered_map<utils::IndexType::meta, std::unique_ptr<ASystem>> _systems;
 
         std::string entitiesDir;
         std::string systemsDir;

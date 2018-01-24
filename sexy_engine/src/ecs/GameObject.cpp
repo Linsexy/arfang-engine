@@ -14,7 +14,12 @@ Sex::GameObject::GameObject(unsigned int id) : _id(id)
     ++__id__;
 }
 
-unsigned int Sex::GameObject::getId() const
+unsigned int Sex::GameObject::getId() const noexcept
 {
     return _id;
+}
+
+void Sex::GameObject::setId(unsigned int id) noexcept
+{
+    _id = id;
 }

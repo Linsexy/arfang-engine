@@ -12,6 +12,7 @@
 #include "utils/IndexType.hpp"
 #include "GameObject.hpp"
 #include "Mediator.hpp"
+#include "EntityFactory.hpp"
 
 namespace Sex
 {
@@ -56,6 +57,43 @@ namespace Sex
             return (ret);
         }
 
+		void destroyObject(std::shared_ptr<GameObject> &objectToDestroy) const
+        {
+			GameObject::DeleteEvent const deleteEvent = GameObject::DeleteEvent(objectToDestroy);
+			transmit(deleteEvent);
+			objectToDestroy.reset();
+		}
+
+        auto createObject(utils::IndexType::meta type) const
+        {
+            auto ret = EntityFactory::create(type);
+            transmit(static_cast<const std::shared_ptr<GameObject> &>(ret));
+            return (ret);
+        }
+
+        auto createObject(utils::IndexType::meta type, unsigned int id) const
+        {
+            auto ret = EntityFactory::create(type, id);
+            transmit(static_cast<const std::shared_ptr<GameObject> &>(ret));
+            return (ret);
+        }
+
+        template <typename ST, typename... Args>
+        void addSubSystem(Args& ...args)
+        {
+            static_assert(std::is_base_of<ASystem, ST>::value,
+                        "You should add Systems, not ponies");
+
+            auto ret = std::make_unique<ST>(mediator, args...);
+            mediator->addSystem(ret.get());
+            _subS.emplace(utils::IndexType::get<ST>(), std::move(ret));
+        }
+
+        utils::IndexType::meta getIndexType() const noexcept override
+        {
+            return (utils::IndexType::get<CRTP>());
+        }
+
     protected:
         virtual void handler(const AbstractData& data) override
         {
@@ -68,7 +106,7 @@ namespace Sex
         }
 
     public:
-        std::vector<unsigned int> getTypes() const noexcept override {
+        std::vector<utils::IndexType::meta> getTypes() const noexcept override {
             return (utils::IndexType::getMany<Events...>());
         }
 
@@ -80,8 +118,10 @@ namespace Sex
         }
 
     private:
-        std::unordered_map<unsigned int,
+        std::unordered_map<utils::IndexType::meta,
     						std::function <void(const AbstractData&)> > _fptr;
+        std::unordered_map<utils::IndexType::meta,
+                            std::unique_ptr<ASystem>> _subS;
     };
 }
 
