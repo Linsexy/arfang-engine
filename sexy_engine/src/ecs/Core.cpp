@@ -22,7 +22,6 @@ void Sex::Core::go()
 
             for (auto &sys : _systems) {
                 auto now = std::chrono::high_resolution_clock::now();
-                sleep(1);
                 std::chrono::duration<double, std::milli> elapsed = now - start;
                 sys.second->update(elapsed.count());
             }
