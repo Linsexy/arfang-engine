@@ -7,6 +7,7 @@
 
 #include <unordered_map>
 #include <memory>
+#include <functional>
 #include "ecs/Components/IComponent.hpp"
 #include "utils/IndexType.hpp"
 
@@ -15,6 +16,19 @@
 namespace Sex {
     class GameObject {
     public:
+		struct DeleteEvent
+		{
+			std::shared_ptr<GameObject> const &objectToDestroy;
+			DeleteEvent(std::shared_ptr<GameObject> const &obj) : objectToDestroy(obj) {}
+		};
+
+        struct Loader
+        {
+            std::function<std::shared_ptr<GameObject>()> load;
+            utils::IndexType::meta                       type;
+        };
+
+
         static unsigned int __id__;
 
         GameObject(); /* GameObjects should only be created by the createObject function */
@@ -23,7 +37,7 @@ namespace Sex {
         ~GameObject() = default;
 
         template<typename CT, typename... Args>
-        bool emplaceComponent(Args const &... args) noexcept {
+        bool emplaceComponent(Args&&... args) noexcept {
             static_assert(std::is_base_of<IComponent, CT>::value,
                           "You have to attach components, not ponies.");
 
@@ -60,6 +74,9 @@ namespace Sex {
             return (_components.find(utils::IndexType::get<CT>()) != _components.end());
         }
 
+        void setId(unsigned int) noexcept ;
+        unsigned int getId() const noexcept ;
+
         template<typename CT>
         void detachComponent() {
             auto it = _components.find(utils::IndexType::get<CT>());
@@ -69,10 +86,9 @@ namespace Sex {
             _components.erase(it);
         }
 
-        unsigned int getId() const;
 
     private:
-        std::unordered_map<unsigned int, std::shared_ptr<IComponent>> _components;
+        std::unordered_map<utils::IndexType::meta, std::shared_ptr<IComponent>> _components;
         unsigned int _id;
     };
 }

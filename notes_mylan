@@ -1,0 +1,14 @@
+Bonjour My-Lan,
+
+Voici comment fonctionne le load d'entites :
+      - un entryPoint comme dans libennemy.so doit etre present.
+      - Comme tu peux le voir dans le code il faut d'abord faire une Query. une Query est un evenement qui permet a l'EntityManager d'ouvrir la dll etc.
+      - Suite a la Query, une response est envoye, qui contient un vecteur de metaTypes. ces metatypes correspondent chacun a une entite load dans le dossier donne a l'etape precedente.
+      - regarde GameLogicManager pour voir comment les utiliser
+      - Il faut donc que l'entityManager reagisse aux connexions de clients et leur dise quoi load
+      - du cote client, l'entityManager doit reagir a son propre evenement cree cote serveur et load (cad preparer la creation eventuelle) l'entite donnee
+      - du cote reseau, il faut donc transmettre le chemin de la dll (je pense que ca devrait suffire)
+      - ainsi Lorsque qu'une entite apparait, il suffira de transmettre le metatype.
+      - Si tu as des questions n'hesite pas.
+
+Bonne journee.

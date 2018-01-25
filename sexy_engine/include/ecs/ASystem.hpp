@@ -19,8 +19,8 @@ namespace Sex {
     protected:
         struct AbstractData /* Is useful to provide an interface in order to call virtual functions */
         {
-            AbstractData(unsigned int d) : mType(d) {}
-            unsigned int mType;
+            AbstractData(utils::IndexType::meta d) : mType(d) {}
+            utils::IndexType::meta mType;
         };
 
         template <typename DT>
@@ -34,13 +34,13 @@ namespace Sex {
     public:
         ASystem(const std::shared_ptr<Mediator> &m = nullptr) : mediator(m)
         {}
-        virtual void update(long) noexcept {};
+        virtual void update(double) noexcept {};
 
         virtual ~ASystem() = default;
 
-        virtual unsigned int getIndexType() const noexcept = 0;
+        virtual utils::IndexType::meta getIndexType() const noexcept = 0;
 
-        virtual std::vector<unsigned int> getTypes() const noexcept = 0;
+        virtual std::vector<utils::IndexType::meta> getTypes() const noexcept = 0;
 
         Mediator *getMediator() const noexcept {return mediator.get();}
 

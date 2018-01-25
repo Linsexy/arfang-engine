@@ -7,22 +7,25 @@
 
 #include "ecs/Components/IComponent.hpp"
 
-enum EntityType
+namespace Sex
 {
-	HERO,
-	HERO_SHOOT,
-	ENNEMY,
-	ENNEMY_SHOOT,
-	DESTROYABLE,
-	OBSTACLE,
-	POWERUP
-};
+    struct TypeComponent : public IComponent
+    {
+        enum EntityType
+        {
+            HERO,
+            HERO_SHOOT,
+            ENNEMY,
+            ENNEMY_SHOOT,
+            DESTROYABLE,
+            OBSTACLE,
+            POWERUP
+        };
 
-struct TypeComponent : public IComponent
-{
-	EntityType		type;
+        EntityType		type;
 
-	TypeComponent(EntityType const &nType) : type(nType) {}
-};
+        TypeComponent(EntityType const &nType) : type(nType) {}
+    };
+}
 
 #endif //ECS_TYPECOMPONENT_HPP
