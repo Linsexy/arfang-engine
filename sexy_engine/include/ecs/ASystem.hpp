@@ -34,7 +34,7 @@ namespace Sex {
     public:
         ASystem(const std::shared_ptr<Mediator> &m = nullptr) : mediator(m)
         {}
-        virtual void update(long) noexcept {};
+        virtual void update(double) noexcept {};
 
         virtual ~ASystem() = default;
 

@@ -2,6 +2,7 @@
 // Created by benito on 1/15/18.
 //
 
+#include <unistd.h>
 #include <string>
 #include <iostream>
 #include <experimental/filesystem>
@@ -21,8 +22,9 @@ void Sex::Core::go()
 
             for (auto &sys : _systems) {
                 auto now = std::chrono::high_resolution_clock::now();
-                auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(now - start).count();
-                sys.second->update(elapsed);
+                sleep(1);
+                std::chrono::duration<double, std::milli> elapsed = now - start;
+                sys.second->update(elapsed.count());
             }
             //std::cout << (frameTime - elapsed) << std::endl;
             //auto sexy = (frameTime - elapsed) * 1000;
