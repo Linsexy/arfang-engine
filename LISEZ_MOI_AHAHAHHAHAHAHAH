@@ -1,0 +1,2 @@
+Pour les gens qui font de la GameLogic :
+     vous etes inscrits a un evenement "Collide" -> Designe des gens qui collide (lel) -> Vous devez agir en consequence. Si vous devez modifier des choses, le faire UNIQUEMENT dans PhysicComponent, ou me demander (je suis benoit)
