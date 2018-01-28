@@ -1,4 +1,15 @@
-# ECS
+# SexyEngine
+
+The SexyEngine is an implementation of the ECS design pattern. For those who don't know about it, I'm gonna cover it quickly. For others click here.
+
+## ECS
+First of all, the acronym means Entity Component System. It's a pattern that is commonly used in video games development due to it's modularity and ease to write/understand.
+Let's start explanations with Entities.
+
+### Entities
+
+Basically, entities are the "objects" of the world. By this I mean every thing that can be seen (it's not mandatory), but mot generally, everything that compose
+the game. In most of the implemantations, an Entity is only and ID and a bunch of Components (I explain it just after this). In the SexyEngine the class representing it are GameObjects.
 
 ### How to use Entities and Components
 

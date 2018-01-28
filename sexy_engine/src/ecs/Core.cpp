@@ -2,7 +2,6 @@
 // Created by benito on 1/15/18.
 //
 
-#include <unistd.h>
 #include <string>
 #include <iostream>
 #include <experimental/filesystem>
@@ -12,7 +11,6 @@
 
 void Sex::Core::go()
 {
-    createObject<Sex::Player>(3);
     try {
         //TODO : Abstraire la gestion du temps dans une classe qui retourne le temps écoulé et appelle la fonction.
         //TODO : Actuellement le temps ne permet pas de gérer sur des systèmes moins performants.

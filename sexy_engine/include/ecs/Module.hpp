@@ -79,14 +79,15 @@ namespace Sex
         }
 
         template <typename ST, typename... Args>
-        void addSubSystem(Args& ...args)
+        auto addSubSystem(Args& ...args)
         {
             static_assert(std::is_base_of<ASystem, ST>::value,
                         "You should add Systems, not ponies");
 
-            auto ret = std::make_unique<ST>(mediator, args...);
+            auto ret = std::make_shared<ST>(mediator, args...);
             mediator->addSystem(ret.get());
-            _subS.emplace(utils::IndexType::get<ST>(), std::move(ret));
+            _subS.emplace(utils::IndexType::get<ST>(), ret);
+            return ret;
         }
 
         utils::IndexType::meta getIndexType() const noexcept override
@@ -121,7 +122,7 @@ namespace Sex
         std::unordered_map<utils::IndexType::meta,
     						std::function <void(const AbstractData&)> > _fptr;
         std::unordered_map<utils::IndexType::meta,
-                            std::unique_ptr<ASystem>> _subS;
+                            std::shared_ptr<ASystem>> _subS;
     };
 }
 

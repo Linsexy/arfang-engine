@@ -34,7 +34,7 @@ namespace Sex {
         GameObject(); /* GameObjects should only be created by the createObject function */
         GameObject(unsigned int);
 
-        ~GameObject() = default;
+        virtual ~GameObject() = default;
 
         template<typename CT, typename... Args>
         bool emplaceComponent(Args&&... args) noexcept {
