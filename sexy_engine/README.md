@@ -1,6 +1,6 @@
 # SexyEngine
 
-The SexyEngine is an implementation of the ECS design pattern. For those who don't know about it, I'm gonna cover it quickly. For others [click here](https://gitlab.com/farnir/rtype/edit/master/sexy_engine/README.md#how-to-use-entities-and-components).
+The SexyEngine is an implementation of the ECS design pattern. For those who don't know about it, I'm going to cover it quickly. For others [click here](https://gitlab.com/farnir/rtype/edit/master/sexy_engine/README.md#how-to-use-entities-and-components).
 
 ## ECS
 
@@ -43,10 +43,21 @@ int main()
 ### Systems
 
 The third and last part composing the ECS pattern are Systems. Those hold the logic of your game (or whatever you're building), which means that they interact with entities
-and their components, they're the *controllers* of your software.
+and their components, they're the *controllers* of your software. To give you an idea about their uses, people typically implement Systems such as Graphic, Physics, etc...
 
 ### Mediator and Systems
 
+As I said, the Systems control interact with entities. In the SexyEngine i've chose to use an other design pattern, the Mediator. I'm not going to explain anything about it, because
+it's one of the most used patterns and if you don't know about it, you can easily find informations about it and on the collaboratives internets.
+Let's go back to our purpose. So systems can interacts with Entities, but also with other Systems (that's why I talked about Mediator).
+To permit this, all the Systems MUST inherit from the [Module](include/ecs/Module.hpp) class, which itself inherit from [ASystem](include/ecs/ASystem.hpp).
+All the systems contains a pointer to a [Mediator](include/ecs/Mediator.hpp) which allows them to communicate informations to others, using their *Module* interface.
+
+**Systems are allowed to choose which information from other Systems they're interested in**. To do this, when inheriting from Module,
+which is a templated class, you must give first, as template parameters, yourself (if this confuses you, see [this](https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern))
+and then the *types* your want to receive. You must then provide an *handle* function for any type you *registered* to.
+
+##### Exemple of Systems
 
 ```cpp
 
@@ -71,16 +82,25 @@ class Other : public Sex::Module<Other,
                                    int> /* template it on each type you want to receive */
 {
 public:
-    Other(Sex::Mediator *m) : Sex::Module<Other, int>(m) {}
+    Other(std::shared_ptr<Sex::Mediator> const& m) : Sex::Module<Other, 
+                                                                    int>(m) {}
 
-    void handle(int zizi)
+    void handle(int lol)
     {
-        std::cout << "I received " << zizi << std::endl;
+        std::cout << "I received " << lol << std::endl;
     }
 };
-
 ```
-### How to use Systems
+### The core
+The core class purpose if basically to control your controllers (the systems). It is itself a System, but containing others and calling periodically their *update* virtual method
+
+```cpp
+virtual void update(double) noexcept
+```
+
+This method goal is to allow systems to do internal work. The parameter represent the elapsed time since the last call in milliseconds. (more information in the Core documentation)
+
+##### How to use Systems' communication
 
 ```cpp
 int main()
@@ -97,7 +117,7 @@ int main()
 }
 ```
 
-### How to create Entities (GameObjects)
+##### How to create Entities (GameObjects)
 
 ```cpp
 struct Nimoft : public Sex::Module<Nimoft,
