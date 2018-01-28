@@ -1,8 +1,9 @@
 # SexyEngine
 
-The SexyEngine is an implementation of the ECS design pattern. For those who don't know about it, I'm gonna cover it quickly. For others click here.
+The SexyEngine is an implementation of the ECS design pattern. For those who don't know about it, I'm gonna cover it quickly. For others [click here](https://gitlab.com/farnir/rtype/edit/master/sexy_engine/README.md#how-to-use-entities-and-components).
 
 ## ECS
+
 First of all, the acronym means Entity Component System. It's a pattern that is commonly used in video games development due to it's modularity and ease to write/understand.
 Let's start explanations with Entities.
 
@@ -10,10 +11,23 @@ Let's start explanations with Entities.
 
 Basically, entities are the "objects" of the world. By this I mean every thing that can be seen (it's not mandatory), but mot generally, everything that compose
 the game. In most of the implemantations, an Entity is only and ID and a bunch of Components (I explain it just after this). In the SexyEngine, the class representing it are [GameObjects](include/ecs/GAMEOBJECT.md).
+In the SexyEngine, all your Entities are GameObjects (by inheritance or simply raw GameObjects).
+
+### Components
+
+I said it earlier, Entities are *composed* by [Components](nimoft). In fact, you can see Entities like a container of components, with an interface to interact with them, and an ID
+in order to recognize them. The components are the data of GameObjects.
 
 ### How to use Entities and Components
 
 ```cpp
+struct PosComponent : public IComponent
+{
+    unsigned int x;
+    unsigned int y;
+}
+
+
 int main()
 {
     GameObject Mylan; /* never create GameObjects like this (example below) */
