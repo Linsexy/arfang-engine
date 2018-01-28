@@ -9,7 +9,7 @@ Let's start explanations with Entities.
 ### Entities
 
 Basically, entities are the "objects" of the world. By this I mean every thing that can be seen (it's not mandatory), but mot generally, everything that compose
-the game. In most of the implemantations, an Entity is only and ID and a bunch of Components (I explain it just after this). In the SexyEngine the class representing it are GameObjects.
+the game. In most of the implemantations, an Entity is only and ID and a bunch of Components (I explain it just after this). In the SexyEngine, the class representing it are [GameObjects](/sexy_engine/ecs/include/GAMEOBJECT.md).
 
 ### How to use Entities and Components
 
