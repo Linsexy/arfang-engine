@@ -17,8 +17,9 @@ In the SexyEngine, all your Entities are GameObjects (by inheritance or simply r
 
 I said it earlier, Entities are *composed* by [Components](nimoft). In fact, you can see Entities like a container of components, with an interface to interact with them, and an ID
 in order to recognize them. The components are the data of GameObjects.
+In the SexyEngine, they all must inherit from IComponent.
 
-### How to use Entities and Components
+##### How to use Entities and Components
 
 ```cpp
 struct PosComponent : public IComponent
@@ -39,8 +40,13 @@ int main()
 }
 ```
 
-##### Every system needs to inherit from Module templated on the System itself.
-##### The other template parameters represent all the types it wants to receive.
+### Systems
+
+The third and last part composing the ECS pattern are Systems. Those hold the logic of your game (or whatever you're building), which means that they interact with entities
+and their components, they're the *controllers* of your software.
+
+### Mediator and Systems
+
 
 ```cpp
 
@@ -49,7 +55,8 @@ class System : public Sex::Module<System,
                                     std::string>
 {
 public:
-    System(Sex::Mediator * m) : Sex::Module<System, std::string>(m)
+    System(const std::shared_ptr<Sex::Mediator> &m) 
+    : Sex::Module<System, std::string>(m)
     {}
 
     void handle(const std::string& string)
