@@ -9,7 +9,7 @@
 
 namespace Sex {
     struct PosComponent : public IComponent {
-        PosComponent(int xx, int yy) : x(xx), y(yy) {}
+        PosComponent(double xx, double yy) : x(xx), y(yy) {}
 
         double x;
         double y;

@@ -4,12 +4,12 @@ The SexyEngine is an implementation of the ECS design pattern. For those who don
 
 ## ECS
 
-First of all, the acronym means Entity Component System. It's a pattern that is commonly used in video games development due to it's modularity and ease to write/understand.
+First of all, the acronym means Entity Component System. It's a pattern that is commonly used in video games development due to its modularity and ease to write/understand.
 Let's start explanations with Entities.
 
 ### Entities
 
-Basically, entities are the "objects" of the world. By this I mean every thing that can be seen (it's not mandatory), but mot generally, everything that compose
+Basically, entities are the "objects" of the world. By this I mean every thing that can be seen (it's not mandatory), but most generally, everything that composes
 the game. In most of the implemantations, an Entity is only and ID and a bunch of Components (I explain it just after this). In the SexyEngine, the class representing it are [GameObjects](include/ecs/GAMEOBJECT.md).
 In the SexyEngine, all your Entities are GameObjects (by inheritance or simply raw GameObjects).
 
@@ -47,11 +47,11 @@ and their components, they're the *controllers* of your software. To give you an
 
 ### Mediator and Systems
 
-As I said, the Systems control interact with entities. In the SexyEngine i've chose to use an other design pattern, the Mediator. I'm not going to explain anything about it, because
+As I said, the Systems control interact with entities. In the SexyEngine i've chosen to use an other design pattern, the Mediator. I'm not going to explain anything about it, because
 it's one of the most used patterns and if you don't know about it, you can easily find informations about it and on the collaboratives internets.
 Let's go back to our purpose. So systems can interacts with Entities, but also with other Systems (that's why I talked about Mediator).
 To permit this, all the Systems MUST inherit from the [Module](include/ecs/Module.hpp) class, which itself inherit from [ASystem](include/ecs/ASystem.hpp).
-All the systems contains a pointer to a [Mediator](include/ecs/Mediator.hpp) which allows them to communicate informations to others, using their *Module* interface.
+All the systems contain a pointer to a [Mediator](include/ecs/Mediator.hpp) which allows them to communicate informations to others, using their *Module* interface.
 
 **Systems are allowed to choose which information from other Systems they're interested in**. To do this, when inheriting from Module,
 which is a templated class, you must give first, as template parameters, yourself (if this confuses you, see [this](https://en.wikipedia.org/wiki/Curiously_recurring_template_pattern))
@@ -98,7 +98,7 @@ The core class purpose if basically to control your controllers (the systems). I
 virtual void update(double) noexcept
 ```
 
-This method goal is to allow systems to do internal work. The parameter represent the elapsed time since the last call in milliseconds. (more information in the Core documentation)
+This method goal is to allow systems to do internal work. The parameter represents the elapsed time since the last call in milliseconds. (more information in the Core documentation)
 
 ##### How to use Systems' communication
 
