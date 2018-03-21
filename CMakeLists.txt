@@ -1,16 +1,12 @@
-include_directories(${rtype_SOURCE_DIR}/sexy_engine/include/)
-include_directories(${rtype_SOURCE_DIR}/client/include/)
-include_directories(${rtype_SOURCE_DIR}/game_server/include/)
+cmake_minimum_required(VERSION 3.10)
+
+include_directories(include/)
 
 set(LIB_TYPE SHARED)
 
-if (WIN32)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${rtype_SOURCE_DIR}")	
+if (WIN32)	
 set(LIB_TYPE STATIC)
 endif()
-
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${rtype_SOURCE_DIR}")
-
 
 FILE(GLOB SRC_SEXY
         src/ecs/*.cpp
