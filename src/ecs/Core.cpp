@@ -22,10 +22,6 @@ void Af::Core::go()
                 std::chrono::duration<double, std::milli> elapsed = now - start;
                 sys.second->update(elapsed.count());
             }
-            //std::cout << (frameTime - elapsed) << std::endl;
-            //auto Afy = (frameTime - elapsed) * 1000;
-            //usleep(Afy > 0.0 ? Afy : 0);
-            //std::cout << Afy << std::endl;
         }
     }
     catch (const std::exception &e)
