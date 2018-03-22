@@ -1,6 +1,8 @@
-# SexyEngine
+# Still a work in progress, arfang is not usable at all
 
-The SexyEngine is an implementation of the ECS design pattern. For those who don't know about it, I'm going to cover it quickly. For others [click here](https://gitlab.com/farnir/rtype/edit/master/sexy_engine/README.md#how-to-use-entities-and-components).
+# ArfangEngine
+
+The ArfangEngine is an implementation of the ECS design pattern. For those who don't know about it, I'm going to cover it quickly. For others [click here](https://https://github.com/Linsexy/arfang-engine/README.md#how-to-use-entities-and-components).
 
 ## ECS
 
@@ -10,14 +12,14 @@ Let's start explanations with Entities.
 ### Entities
 
 Basically, entities are the "objects" of the world. By this I mean every thing that can be seen (it's not mandatory), but most generally, everything that composes
-the game. In most of the implemantations, an Entity is only and ID and a bunch of Components (I explain it just after this). In the SexyEngine, the class representing it are [GameObjects](include/ecs/GAMEOBJECT.md).
-In the SexyEngine, all your Entities are GameObjects (by inheritance or simply raw GameObjects).
+the game. In most of the implemantations, an Entity is only and ID and a bunch of Components (I explain it just after this). In the ArfangEngine, the class representing it are [GameObjects](include/ecs/GAMEOBJECT.md).
+In the ArfangEngine, all your Entities are GameObjects (by inheritance or simply raw GameObjects).
 
 ### Components
 
 I said it earlier, Entities are *composed* by [Components](nimoft). In fact, you can see Entities like a container of components, with an interface to interact with them, and an ID
 in order to recognize them. The components are the data of GameObjects.
-In the SexyEngine, they all must inherit from IComponent.
+In the ArfangEngine, they all must inherit from IComponent.
 
 ##### How to use Entities and Components
 
@@ -31,10 +33,10 @@ struct PosComponent : public IComponent
 
 int main()
 {
-    GameObject Mylan; /* never create GameObjects like this (example below) */
-    Mylan.emplaceComponent<PosComponent>(17, 27); /* creates a PosComponent with 17, 27 as parameters */
-    if (Mylan.hasComponent<PosComponent>()) {
-        auto const &pos = Mylan.getComponent<PosComponent>();
+    GameObject myObject; /* never create GameObjects like this (example below) */
+    myObject.emplaceComponent<PosComponent>(17, 27); /* creates a PosComponent with 17, 27 as parameters */
+    if (myObject.hasComponent<PosComponent>()) {
+        auto const &pos = myObject.getComponent<PosComponent>();
         std::cout << pos.x << std::endl;
     }
 }
@@ -47,7 +49,7 @@ and their components, they're the *controllers* of your software. To give you an
 
 ### Mediator and Systems
 
-As I said, the Systems control interact with entities. In the SexyEngine i've chosen to use an other design pattern, the Mediator. I'm not going to explain anything about it, because
+As I said, the Systems control interact with entities. In the ArfangEngine i've chosen to use an other design pattern, the Mediator. I'm not going to explain anything about it, because
 it's one of the most used patterns and if you don't know about it, you can easily find informations about it and on the collaboratives internets.
 Let's go back to our purpose. So systems can interacts with Entities, but also with other Systems (that's why I talked about Mediator).
 To permit this, all the Systems MUST inherit from the [Module](include/ecs/Module.hpp) class, which itself inherit from [ASystem](include/ecs/ASystem.hpp).
