@@ -7,6 +7,8 @@ Explanations about it in the [ECS](/Afy_engine/README.md) "course".
 ```cpp
 GameObject(); /* GameObjects should only be created by the createObject function (see Module doc) */
 GameObject(unsigned int);
+
+Game objects are non-copyable and movable.
 ```
 ## Members
 
