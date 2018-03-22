@@ -29,9 +29,9 @@ namespace Af {
         };
 
 
-        static unsigned int __id__;
-
         GameObject(); /* GameObjects should only be created by the createObject function */
+        GameObject(const GameObject&) = delete;
+        GameObject(GameObject&&) = default;
         GameObject(unsigned int);
 
         virtual ~GameObject() = default;
@@ -41,14 +41,7 @@ namespace Af {
             static_assert(std::is_base_of<IComponent, CT>::value,
                           "You have to attach components, not ponies.");
 
-            return (_components.emplace(utils::IndexType::get<CT>(), std::make_shared<CT>(args...)).second);
-        }
-
-        template<typename CT>
-        bool addComponent(CT &component) noexcept {
-            static_assert(std::is_base_of<IComponent, CT>::value,
-                          "You have to attach components, not ponies.");
-            return (_components.emplace(utils::IndexType::get<CT>(), std::make_shared<CT>(component)).second);
+            return (_components.emplace(utils::IndexType::get<CT>(), std::make_shared<CT>(std::forward(args...))).second);
         }
 
         template<typename CT>
@@ -86,6 +79,8 @@ namespace Af {
             _components.erase(it);
         }
 
+    private:
+        static unsigned int id;
 
     private:
         std::unordered_map<utils::IndexType::meta, std::shared_ptr<IComponent>> _components;

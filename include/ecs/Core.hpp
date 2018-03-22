@@ -40,7 +40,7 @@ namespace Af {
             static_assert(utils::is_named<ST>::value,
                             "You should have a classname that rocks. Refer to Named class for details.");
 
-            auto s = std::make_unique<ST>(mediator, args...);
+            auto s = std::make_unique<ST>(mediator, std::forward(args...));
             mediator->addSystem(s.get());
             _systems.emplace(utils::IndexType::get<ST>(), std::move(s));
         }

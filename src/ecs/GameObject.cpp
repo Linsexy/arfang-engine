@@ -4,14 +4,14 @@
 
 #include <ecs/GameObject.hpp>
 
-unsigned int Af::GameObject::__id__ = 0;
+unsigned int Af::GameObject::id = 0;
 
-Af::GameObject::GameObject()  : _id(++__id__)
+Af::GameObject::GameObject()  : _id(++id)
 {}
 
 Af::GameObject::GameObject(unsigned int id) : _id(id)
 {
-    ++__id__;
+    ++id;
 }
 
 unsigned int Af::GameObject::getId() const noexcept

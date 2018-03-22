@@ -49,7 +49,7 @@ namespace Af {
 
     public:
         template <typename DT>
-        void receive(const DT& data)
+        void receive(DT&& data)
         {
             //std::cout << "start receiving" << std::endl;
             auto d = ConcreteData<DT>(data);
