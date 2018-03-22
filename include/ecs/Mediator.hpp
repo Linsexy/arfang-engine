@@ -20,15 +20,10 @@ namespace Af {
 
         /* TODO: note : c'est peut etre de la grosse merde que ST soit le type réel, faire attention. */
         template<typename ST, typename T>
-        void transmit(const ST *sender, const T &transmit) {
-             auto id = utils::IndexType::get<T>();
+        void transmit(const ST *sender, T&& transmit) {
+            auto id = utils::IndexType::get<std::decay_t<T>>();
             for (const auto &sys : _systems) {
-                /*for (auto x : sys.second)
-                {
-                    std::cout << x << std::endl;
-                }*/
                 if (sys.first != sender && std::find(sys.second.begin(), sys.second.end(), id) != sys.second.end()) {
-                    //std::cout << "Jean Michel !" << std::endl;
                     sys.first->receive(transmit);
                 }
             }
