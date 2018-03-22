@@ -136,8 +136,8 @@ struct Nimoft : public Af::Module<Nimoft,
 
 core.emplaceSystem<Nimoft>();
 
-auto Af = o.createObject<Af::GameObject>(); /* Only way to create Entities */
+auto newObj = o.createObject<Af::GameObject>(); /* Only way to create Entities */
                                               /* First template argument is it's type, and others it's constructor's arguments */
-//auto sox = o.createObject<int>(); /* Doesn't work */
+//auto notNewObj = o.createObject<int>(); /* Doesn't work */
 
 ```
