@@ -14,7 +14,7 @@
 #include "Mediator.hpp"
 #include "EntityFactory.hpp"
 
-namespace Sex
+namespace Af
 {
 
     /* If A inherits from Module, CRTP must be A */

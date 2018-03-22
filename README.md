@@ -2,7 +2,7 @@
 
 # ArfangEngine
 
-The ArfangEngine is an implementation of the ECS design pattern. For those who don't know about it, I'm going to cover it quickly. For others [click here](https://https://github.com/Linsexy/arfang-engine/README.md#how-to-use-entities-and-components).
+The ArfangEngine is an implementation of the ECS design pattern. For those who don't know about it, I'm going to cover it quickly. For others [click here](https://https://github.com/LinAfy/arfang-engine/README.md#how-to-use-entities-and-components).
 
 ## ECS
 
@@ -64,12 +64,12 @@ and then the *types* your want to receive. You must then provide an *handle* fun
 ```cpp
 
 /* will receive std::string */
-class System : public Sex::Module<System,
+class System : public Af::Module<System,
                                     std::string>
 {
 public:
-    System(const std::shared_ptr<Sex::Mediator> &m) 
-    : Sex::Module<System, std::string>(m)
+    System(const std::shared_ptr<Af::Mediator> &m) 
+    : Af::Module<System, std::string>(m)
     {}
 
     void handle(const std::string& string)
@@ -80,11 +80,11 @@ public:
 
 
 /* will receive int */
-class Other : public Sex::Module<Other,
+class Other : public Af::Module<Other,
                                    int> /* template it on each type you want to receive */
 {
 public:
-    Other(std::shared_ptr<Sex::Mediator> const& m) : Sex::Module<Other, 
+    Other(std::shared_ptr<Af::Mediator> const& m) : Af::Module<Other, 
                                                                     int>(m) {}
 
     void handle(int lol)
@@ -107,7 +107,7 @@ This method goal is to allow systems to do internal work. The parameter represen
 ```cpp
 int main()
 {
-    Sex::Core core; /* handle the main loop of the program */
+    Af::Core core; /* handle the main loop of the program */
 
     core.emplaceSystem<System>(); /* create the system System and save it */
     core.emplaceSystem<Other>(); /* Always prefere emplaceSystem if possible */
@@ -122,13 +122,13 @@ int main()
 ##### How to create Entities (GameObjects)
 
 ```cpp
-struct Nimoft : public Sex::Module<Nimoft,
-        std::shared_ptr<Sex::GameObject>> /* template it on each type you want to receive */
+struct Nimoft : public Af::Module<Nimoft,
+        std::shared_ptr<Af::GameObject>> /* template it on each type you want to receive */
 {
-    Nimoft(Sex::Mediator *m) : Sex::Module<Nimoft,
-                                            std::shared_ptr<Sex::GameObject>>(m) {}
+    Nimoft(Af::Mediator *m) : Af::Module<Nimoft,
+                                            std::shared_ptr<Af::GameObject>>(m) {}
 
-    void handle(const std::shared_ptr<Sex::GameObject>& entity)
+    void handle(const std::shared_ptr<Af::GameObject>& entity)
     {
         std::cout << "I received " << entity->getId() << std::endl;
     }
@@ -136,7 +136,7 @@ struct Nimoft : public Sex::Module<Nimoft,
 
 core.emplaceSystem<Nimoft>();
 
-auto sex = o.createObject<Sex::GameObject>(); /* Only way to create Entities */
+auto Af = o.createObject<Af::GameObject>(); /* Only way to create Entities */
                                               /* First template argument is it's type, and others it's constructor's arguments */
 //auto sox = o.createObject<int>(); /* Doesn't work */
 

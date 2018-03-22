@@ -13,7 +13,7 @@
 
 //Stands for "entities" in a ECS design pattern
 
-namespace Sex {
+namespace Af {
     class GameObject {
     public:
 		struct DeleteEvent

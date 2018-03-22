@@ -11,7 +11,7 @@
 #include "Mediator.hpp"
 #include "Module.hpp"
 
-namespace Sex {
+namespace Af {
     struct Event
     {
         enum class Type

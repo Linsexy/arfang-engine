@@ -12,7 +12,7 @@
 
 //same func in Interface and Module
 
-namespace Sex {
+namespace Af {
     class Mediator/* : public BaseMediator<Mediator>*/ {
     public:
         Mediator() = default;

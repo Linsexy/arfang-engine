@@ -9,7 +9,7 @@
 #include "Module.hpp"
 #include "Protocol/Events/SGEvent.hpp"
 
-namespace Sex {
+namespace Af {
     class EntityManager : public Module<EntityManager,
                                         EntityFactory::Query, Proto::CConnectGameEvent> {
     public:

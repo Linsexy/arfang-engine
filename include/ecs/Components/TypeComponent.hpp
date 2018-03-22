@@ -7,7 +7,7 @@
 
 #include "ecs/Components/IComponent.hpp"
 
-namespace Sex
+namespace Af
 {
     struct TypeComponent : public IComponent
     {

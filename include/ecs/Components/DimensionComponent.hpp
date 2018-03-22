@@ -7,7 +7,7 @@
 
 #include "ecs/Components/IComponent.hpp"
 
-namespace Sex {
+namespace Af {
     struct DimensionComponent : public IComponent {
         DimensionComponent(unsigned int w, unsigned int h) : width(w), height(h) {};
 

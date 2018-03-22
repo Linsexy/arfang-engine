@@ -8,7 +8,7 @@
 #include "ecs/Components/IComponent.hpp"
 #include "utils/IndexType.hpp"
 
-namespace Sex
+namespace Af
 {
     struct WeaponComponent : IComponent
     {

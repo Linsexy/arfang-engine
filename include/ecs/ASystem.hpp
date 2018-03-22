@@ -11,7 +11,7 @@
 #include <utils/IndexType.hpp>
 #include "GameObject.hpp"
 
-namespace Sex {
+namespace Af {
     class Mediator;
 
     class ASystem {

@@ -7,7 +7,7 @@
 
 #include "ecs/Components/IComponent.hpp"
 
-namespace Sex {
+namespace Af {
     struct PosComponent : public IComponent {
         PosComponent(double xx, double yy) : x(xx), y(yy) {}
 

@@ -5,14 +5,14 @@
 #include "ecs/Components/IComponent.hpp"
 #include <Tools.hpp>
 
-namespace Sex
+namespace Af
 {
 	struct SpriteComponent : public IComponent
 	{
 		struct SpriteData
 		{
 			std::string				image;
-			Sex::Vector2D			size;
+			Af::Vector2D			size;
 			int 					depth;
 		};
 		SpriteData				    sprite;

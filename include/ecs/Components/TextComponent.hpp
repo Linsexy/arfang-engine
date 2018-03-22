@@ -9,7 +9,7 @@
 #include "Tools.hpp"
 #include <ecs/Components/IComponent.hpp>
 
-namespace Sex
+namespace Af
 {
     struct TextComponent : public IComponent
     {

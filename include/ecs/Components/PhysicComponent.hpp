@@ -8,15 +8,15 @@
 #include "IComponent.hpp"
 #include "../../../../client/include/Tools.hpp"
 
-namespace Sex
+namespace Af
 {
     struct PhysicComponent : public IComponent
     {
         float           velocity;
-        Sex::Vector2D   dir;
+        Af::Vector2D   dir;
         bool            isCollidable;
 
-        PhysicComponent(float v, Sex::Vector2D& d, bool c) : velocity(v), dir(d), isCollidable(c) {}
+        PhysicComponent(float v, Af::Vector2D& d, bool c) : velocity(v), dir(d), isCollidable(c) {}
     };
 }
 

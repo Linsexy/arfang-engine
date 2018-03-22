@@ -10,7 +10,7 @@
 #include <ecs/GameObject.hpp>
 #include <functional>
 
-namespace Sex {
+namespace Af {
     class EntityFactory
     {
         using creator = std::function<std::shared_ptr<GameObject>()>;

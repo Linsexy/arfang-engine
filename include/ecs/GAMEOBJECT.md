@@ -1,6 +1,6 @@
 # GameObject
 
-Explanations about it in the [ECS](/sexy_engine/README.md) "course".
+Explanations about it in the [ECS](/Afy_engine/README.md) "course".
 
 ## Constructor
 
