@@ -2,7 +2,7 @@
 
 # ArfangEngine
 
-The ArfangEngine is an implementation of the ECS design pattern. For those who don't know about it, I'm going to cover it quickly. For others [click here](https://github.com/Linsexy/arfang-engine/master/README.md#how-to-use-entities-and-components).
+The ArfangEngine is an implementation of the ECS design pattern. For those who don't know about it, I'm going to cover it quickly. For others [click here](https://github.com/Linsexy/arfang-engine/README.md#how-to-use-entities-and-components).
 
 ## ECS
 
