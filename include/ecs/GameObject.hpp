@@ -41,7 +41,8 @@ namespace Af {
             static_assert(std::is_base_of<IComponent, CT>::value,
                           "You have to attach components, not ponies.");
 
-            return (_components.emplace(utils::IndexType::get<CT>(), std::make_shared<CT>(std::forward(args...))).second);
+            return (_components.emplace(utils::IndexType::get<CT>(),
+                                        std::make_shared<CT>(std::forward<Args>(args)...)).second);
         }
 
         template<typename CT>

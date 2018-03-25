@@ -29,30 +29,29 @@ namespace Af
         {
             static_assert(std::is_base_of<Module, CRTP>::value,
             "If a System X inherits from Module, it must template it on itself (class X : public Module<X>)");
+
+
             (addHandler<Events>(),...);
         }
 
         virtual ~Module() = default;
 
-    private:
-        template <typename DT>
-        void addHandler() {
-            auto id = utils::IndexType::get<DT>();
-            this->_fptr.emplace(id,
-                                [this](const AbstractData &abstractData) {
-                                    //std::cout << "I'm an handler" << std::endl;
-                                    auto toSend = static_cast<const ConcreteData <DT> &>(abstractData);
-                                    static_cast<CRTP *>(this)->handle(toSend.data);
-                                });
+    public:
+        /* void ? */
+        template <typename Func>
+        void doAsyncWork(Func&& toCall)
+        {
+            /* call asynchronously toCall */
         }
 
-    public:
+
         template <typename ET, typename... Args>
-        std::shared_ptr<ET> createObject(const Args&... args) const
+        std::shared_ptr<ET> createObject(Args&&... args) const
         {
             static_assert(std::is_base_of<GameObject, ET>::value,
-                          "This function aims creating GameObjects, not your shit");
-            auto ret = std::make_shared<ET>(args...);
+                          "This function aims creating GameObjects, not this");
+
+            auto ret = std::make_shared<ET>(std::forward<Args>(args)...);
             transmit(static_cast<const std::shared_ptr<GameObject> &>(ret));
             return (ret);
         }
@@ -79,12 +78,12 @@ namespace Af
         }
 
         template <typename ST, typename... Args>
-        auto addSubSystem(Args& ...args)
+        auto addSubSystem(Args&& ...args)
         {
             static_assert(std::is_base_of<ASystem, ST>::value,
                         "You should add Systems, not ponies");
 
-            auto ret = std::make_shared<ST>(mediator, args...);
+            auto ret = std::make_shared<ST>(mediator, std::forward<Args>(args)...);
             mediator->addSystem(ret.get());
             _subS.emplace(utils::IndexType::get<ST>(), ret);
             return ret;
@@ -93,6 +92,17 @@ namespace Af
         utils::IndexType::meta getIndexType() const noexcept override
         {
             return (utils::IndexType::get<CRTP>());
+        }
+
+        std::vector<utils::IndexType::meta> getTypes() const noexcept override {
+            return (utils::IndexType::getMany<Events...>());
+        }
+
+        template <typename T>
+        void transmit(const T& t) const
+        {
+            //std::cout << "Transmitting" << std::endl;
+            mediator->transmit(static_cast<const CRTP *>(this), t);
         }
 
     protected:
@@ -106,16 +116,16 @@ namespace Af
             }
         }
 
-    public:
-        std::vector<utils::IndexType::meta> getTypes() const noexcept override {
-            return (utils::IndexType::getMany<Events...>());
-        }
-
-        template <typename T>
-        void transmit(const T& t) const
-        {
-            //std::cout << "Transmitting" << std::endl;
-            mediator->transmit(static_cast<const CRTP *>(this), t);
+    private:
+        template <typename DT>
+        void addHandler() {
+            auto id = utils::IndexType::get<DT>();
+            this->_fptr.emplace(id,
+                                [this](auto&& abstractData) {
+                                    //std::cout << "I'm an handler" << std::endl;
+                                    auto toSend = static_cast<const ConcreteData <DT> &>(abstractData);
+                                    static_cast<CRTP *>(this)->handle(toSend.data);
+                                });
         }
 
     private:
