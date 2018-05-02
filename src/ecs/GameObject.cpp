@@ -4,22 +4,22 @@
 
 #include <ecs/GameObject.hpp>
 
-unsigned int Af::GameObject::id = 0;
+Af::GameObject::EntityId Af::GameObject::id = 0;
 
 Af::GameObject::GameObject()  : _id(++id)
 {}
 
-Af::GameObject::GameObject(unsigned int id) : _id(id)
+Af::GameObject::GameObject(EntityId id) : _id(id)
 {
     ++id;
 }
 
-unsigned int Af::GameObject::getId() const noexcept
+Af::GameObject::EntityId Af::GameObject::getId() const noexcept
 {
     return _id;
 }
 
-void Af::GameObject::setId(unsigned int id) noexcept
+void Af::GameObject::setId(EntityId id) noexcept
 {
     _id = id;
 }

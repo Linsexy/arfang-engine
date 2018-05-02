@@ -7,9 +7,11 @@
 
 #include <string>
 
-namespace utils {
+namespace utils
+{
     template<typename T>
-    struct Named {
+    struct Named
+    {
         Named(const std::string &n)
         {
             name = n;
@@ -22,9 +24,11 @@ namespace utils {
 template <typename T>
 std::string utils::Named<T>::name = "";
 
-namespace utils {
+namespace utils
+{
     template<typename T>
-    struct is_named {
+    struct is_named
+    {
         static const bool value = std::is_base_of<Named<T>, T>::value;
     };
 }

@@ -13,31 +13,24 @@
 
 //Stands for "entities" in a ECS design pattern
 
-namespace Af {
-    class GameObject {
+namespace Af
+{
+    class GameObject
+    {
     public:
-		struct DeleteEvent
-		{
-			std::shared_ptr<GameObject> const &objectToDestroy;
-			DeleteEvent(std::shared_ptr<GameObject> const &obj) : objectToDestroy(obj) {}
-		};
 
-        struct Loader
-        {
-            std::function<std::shared_ptr<GameObject>()> load;
-            utils::IndexType::meta                       type;
-        };
-
+        using EntityId = uint64_t;
 
         GameObject(); /* GameObjects should only be created by the createObject function */
-        GameObject(const GameObject&) = delete;
-        GameObject(GameObject&&) = default;
-        GameObject(unsigned int);
+        GameObject(const GameObject &) = delete;
+        GameObject(GameObject &&) = default;
+        GameObject(EntityId);
 
         virtual ~GameObject() = default;
 
         template<typename CT, typename... Args>
-        bool emplaceComponent(Args&&... args) noexcept {
+        bool emplaceComponent(Args &&... args) noexcept
+        {
             static_assert(std::is_base_of<IComponent, CT>::value,
                           "You have to attach components, not ponies.");
 
@@ -46,7 +39,8 @@ namespace Af {
         }
 
         template<typename CT>
-        CT &getComponent() {
+        CT &getComponent()
+        {
             static_assert(std::is_base_of<IComponent, CT>::value,
                           "You have to attach components, not ponies.");
 
@@ -55,7 +49,8 @@ namespace Af {
         }
 
         template<typename CT>
-        const CT &getComponent() const {
+        const CT &getComponent() const
+        {
             static_assert(std::is_base_of<IComponent, CT>::value,
                           "You have to attach components, not ponies.");
 
@@ -64,28 +59,41 @@ namespace Af {
         }
 
         template<typename CT>
-        bool hasComponent() const noexcept {
+        bool hasComponent() const noexcept
+        {
             return (_components.find(utils::IndexType::get<CT>()) != _components.end());
         }
 
-        void setId(unsigned int) noexcept ;
-        unsigned int getId() const noexcept ;
-
         template<typename CT>
-        void detachComponent() {
+        void detachComponent()
+        {
             auto it = _components.find(utils::IndexType::get<CT>());
-            if (it == _components.end()) {
+            if (it == _components.end())
+            {
                 throw (std::out_of_range("Component not in Entity"));
             }
             _components.erase(it);
         }
 
+        void setId(EntityId) noexcept;
+        EntityId getId() const noexcept;
+
+        /* This Event should be used when a system notifies his siblings
+         * that an entity has to be destroyed */
+        struct DeleteEvent
+        {
+            std::shared_ptr<GameObject> const &objectToDestroy;
+
+            DeleteEvent(std::shared_ptr<GameObject> const &obj) : objectToDestroy(obj)
+            {}
+        };
+
     private:
-        static unsigned int id;
+        static EntityId id;
 
     private:
         std::unordered_map<utils::IndexType::meta, std::shared_ptr<IComponent>> _components;
-        unsigned int _id;
+        EntityId _id;
     };
 }
 

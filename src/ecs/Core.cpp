@@ -36,7 +36,7 @@ utils::DLLoader& Af::Core::getDLLoader()
 }
 
 Af::Core::Core()
-        : Module<Core, Event>(std::make_shared<Mediator>(), "Core"), isOver(false)
+        : Module<Core, Event>(std::make_shared<Mediator>()), isOver(false)
 {
     mediator->addSystem(this);
 }
@@ -67,13 +67,6 @@ void Af::Core::loadSystemsIn(const std::string &dirName)
             std::cerr << e.what() << std::endl;
         }
     }
-}
-
-void Af::Core::loadEntitiesIn(const std::string &dirName)
-{
-    EntityFactory::Query   query;
-    query.paths = { dirName };
-    this->transmit(query);
 }
 
 void Af::Core::setEntityDir(const std::string &s) {entitiesDir = s;}

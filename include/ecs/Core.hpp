@@ -37,8 +37,8 @@ namespace Af {
         void emplaceSystem(Args&&... args) {
             static_assert(std::is_base_of<ASystem, ST>::value,
                           "addSystem function should be called with a type inheriting from ASystem");
-            static_assert(utils::is_named<ST>::value,
-                            "You should have a classname that rocks. Refer to Named class for details.");
+            /*static_assert(utils::is_named<ST>::value,
+                            "You should have a classname that rocks. Refer to Named class for details.");*/
 
             auto s = std::make_unique<ST>(mediator, std::forward<Args>(args)...);
             mediator->addSystem(s.get());
