@@ -20,7 +20,7 @@ namespace utils {
         /* public for technical reasons, nobody should modify it */
 
         template<typename T>
-        static auto get() noexcept {
+        inline static auto get() noexcept {
             //static const auto r_id = ++_id;
             static const auto r_id = std::type_index(typeid(T)).hash_code();
 
@@ -28,7 +28,7 @@ namespace utils {
         }
 
         template<typename... Args>
-        static auto getMany() noexcept {
+        inline static auto getMany() noexcept {
             using expander = std::vector<meta>;
             static const auto ret = expander{(get<Args>())...};
 

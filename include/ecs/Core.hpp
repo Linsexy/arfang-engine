@@ -26,11 +26,13 @@ namespace Af {
     };
     class Core : public Module<Core, Event> {
     public:
+
+        //TODO: template <typename... Systems>
         Core(/*const std::string& entityDir, const std::string &systemDir*/);
         ~Core() = default;
 
         Core(const Core&) = delete;
-        Core(Core&&) = default;
+        Core(Core&&) = delete;
 
 
         template<typename ST, typename... Args>
