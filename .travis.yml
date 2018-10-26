@@ -1,3 +1,7 @@
+language: cpp
+
+compiler: gcc
+
 matrix:
   include:
     - os: linux
