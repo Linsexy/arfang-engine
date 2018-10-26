@@ -1,6 +1,8 @@
+[![Build Status](https://travis-ci.com/Linsexy/arfang-engine.svg?branch=master)](https://travis-ci.com/Linsexy/arfang-engine)
+
 # Still a work in progress, arfang is not usable at all
 
-# ArfangEngine
+# ArfangEngine 
 
 The ArfangEngine is an implementation of the ECS design pattern. For those who don't know about it, I'm going to cover it quickly. For others [click here](https://github.com/Linsexy/arfang-engine/blob/master/README.md#the-core).
 
