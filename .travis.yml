@@ -9,10 +9,17 @@ matrix:
         coverity_scan:
           project:
             name: "Linsexy/arfang-engine"
-            notification_email: benoitlinsey27@gmail.com
-            build_command_prepend: "mkdir -p build && cd build && cmake .."
-            build_command: "make"
-        apt:
+            version: 1.0
+            description : c++ game engine
+            
+          notification_email: benoitlinsey27@gmail.com
+            
+          build_command_prepend: "mkdir -p build && cd build && cmake .."
+          build_command: "make"
+          
+          branch_pattern: coverity_scan
+          
+      apt:
           sources:
             - ubuntu-toolchain-r-test
             - george-edison55-precise-backports
@@ -28,9 +35,3 @@ matrix:
 before_install:
     - eval "${MATRIX_EVAL}"
     - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
-
-script:
-    - mkdir -p build
-    - cd build
-    - cmake ..
-    - make
