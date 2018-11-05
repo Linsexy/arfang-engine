@@ -19,7 +19,7 @@ matrix:
           
           branch_pattern: coverity_scan
           
-      apt:
+        apt:
           sources:
             - ubuntu-toolchain-r-test
             - george-edison55-precise-backports
