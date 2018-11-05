@@ -14,7 +14,6 @@ matrix:
             
           notification_email: benoitlinsey27@gmail.com
             
-          build_command_prepend: "mkdir -p build && cd build && cmake .."
           build_command: "make -C build"
           
           branch_pattern: coverity_scan
@@ -28,16 +27,16 @@ matrix:
             - cmake-data
             - cmake 
 
+      before_script:
+          - mkdir -p build && cd build
+          - cmake ..
+      script:
+          - make
       env:
           - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
           - secure: "OTa90o4MWOJajMhu/N8TEahkJ8OABuY9qNRwIArkrqTvgU5KhAYogFJg84fW5f0Ga4aPYsvi2XADUXpHpUjgdACD1zICa29kell1Xk8n7DsRIN2RwGnTb3rSTodI7ujoLvyY/zjMniM+tSk03yyb95cz1TSwknEVdqpKDAx4rONWfbdcCnHugvzUbTFB6lyI36qnfGilYBp7AuzaHHuCwTb7P78N/N2Hq3E98VdBld6emKCvw8QSV5dYovz3XzUj5YGbj/TvMxeR1a5T+c0MWpX6soP/MCZiTzRw1sbHdOmaJTuCTGt1HqyUxRb7Bee+2DFXSbkuhMaxM+wTSWAJJtV/W0fZSxf26E1sZR+RfRoRHaXijWhUnvZZr7oRnd8UJ41/RFRA5tPwszOZWFzdzmRT7TLG4cgnMjTd0dAE/3PJaU8EUtnV+7kAjeRXS3yr32JDfY6qRXKPeAPpVKe7ebNgklhF4Tfp5gE3ZGi49YNmcZydnjISP6Dmc4ucef5qApVjOo4XngxluuDeIywIv6euvfzuxun8OXfRWKCve+AxUHpRNE8uysvj8P/HGedNk4CH6ncgkDim/A3uKbP141FHcaOL9Qi6DBNTDh0KR5fbJWW4AT41VMG85rGffQpulWLNU6Bs/7PO9ciM1rI3r0XRfVT7Xska79wAxv+kuv0="
 
 before_install:
     - eval "${MATRIX_EVAL}"
-    - echo -n | openssl s_client -connect https://scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
+    - echo -n | openssl s_client -connect scan.coverity.com:443 | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' | sudo tee -a /etc/ssl/certs/ca-
 
-script:
-    - mkdir -p build
-    - cd build
-    - cmake ..
-    - make
