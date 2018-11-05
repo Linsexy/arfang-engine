@@ -15,7 +15,7 @@ matrix:
           notification_email: benoitlinsey27@gmail.com
             
           build_command_prepend: "./configure"
-          build_command: "make"
+          build_command: "make -C build"
           
           branch_pattern: coverity_scan
           
